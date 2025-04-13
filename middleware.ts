@@ -7,9 +7,7 @@ export function middleware(request: NextRequest) {
 export const config = {
   matcher: [
     {
-      source: "/api/*",
-      regexp: "^/api/(.*)",
-      locale: false,
+      source: "/api/:path*",
       has: [
         { type: "header", key: "Authorization", value: "Bearer Token" },
         { type: "query", key: "userId", value: "123" },
