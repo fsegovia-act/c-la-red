@@ -90,6 +90,7 @@ export default function ProductDetailsPage() {
               <Image
                 src={product.imageUrl}
                 alt={product.name}
+                onError={() => setProduct({...product, imageUrl: "/default-product.jpg"})}
                 fill
                 className="object-cover"
               />
