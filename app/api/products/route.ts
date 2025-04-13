@@ -9,7 +9,6 @@ export async function GET() {
     const products = await Product.find({});
     return NextResponse.json({ success: true, data: products });
   } catch (error) {
-    console.error('GET products error:', error);
     return NextResponse.json(
       { success: false, error: 'Error fetching products' },
       { status: 400 }
@@ -25,7 +24,6 @@ export async function POST(request: NextRequest) {
     const product = await Product.create(body);
     return NextResponse.json({ success: true, data: product }, { status: 201 });
   } catch (error) {
-    console.error('POST product error:', error);
     return NextResponse.json(
       { success: false, error: 'Error creating product' },
       { status: 400 }

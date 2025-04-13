@@ -56,7 +56,6 @@ const ProductsPage: NextPage = () => {
       }
     } catch (error) {
       setError("Error connecting to the server");
-      console.error("Fetch error:", error);
     } finally {
       setIsLoading(false);
     }
@@ -108,7 +107,6 @@ const ProductsPage: NextPage = () => {
       }
     } catch (error) {
       setError("Error submitting the form");
-      console.error("Submit error:", error);
     } finally {
       setIsLoading(false);
     }

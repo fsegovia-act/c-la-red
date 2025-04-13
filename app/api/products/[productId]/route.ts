@@ -1,18 +1,18 @@
-// app/api/products/[id]/route.ts
+// app/api/products/[productId]/route.ts
 import { NextRequest, NextResponse } from 'next/server';
-import dbConnect from '../_lib/mongodb';
-import Product from '../_models/Products';
+import dbConnect from '../../_lib/mongodb';
+import Product from '../../_models/Products';
 
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ productId: string }> }
 ) {
   await dbConnect();
-  const id = params.id;
+  const { productId } = await params;
   
   try {
-    const product = await Product.findById(id);
+    const product = await Product.findById(productId);
     
     if (!product) {
       return NextResponse.json(
@@ -23,7 +23,6 @@ export async function GET(
     
     return NextResponse.json({ success: true, data: product });
   } catch (error) {
-    console.error('GET product error:', error);
     return NextResponse.json(
       { success: false, error: 'Error fetching product' },
       { status: 400 }
@@ -33,14 +32,14 @@ export async function GET(
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: { productId: string } }
 ) {
   await dbConnect();
-  const id = params.id;
+  const productId = params.productId;
   
   try {
     const body = await request.json();
-    const product = await Product.findByIdAndUpdate(id, body, {
+    const product = await Product.findByIdAndUpdate(productId, body, {
       new: true,
       runValidators: true,
     });
@@ -54,7 +53,6 @@ export async function PUT(
     
     return NextResponse.json({ success: true, data: product });
   } catch (error) {
-    console.error('PUT product error:', error);
     return NextResponse.json(
       { success: false, error: 'Error updating product' },
       { status: 400 }
@@ -64,13 +62,13 @@ export async function PUT(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: { productId: string } }
 ) {
   await dbConnect();
-  const id = params.id;
+  const productId = params.productId;
   
   try {
-    const deletedProduct = await Product.deleteOne({ _id: id });
+    const deletedProduct = await Product.deleteOne({ _id: productId });
     
     if (!deletedProduct.deletedCount) {
       return NextResponse.json(
@@ -81,7 +79,6 @@ export async function DELETE(
     
     return NextResponse.json({ success: true, data: {} });
   } catch (error) {
-    console.error('DELETE product error:', error);
     return NextResponse.json(
       { success: false, error: 'Error deleting product' },
       { status: 400 }
