@@ -1,8 +1,6 @@
-// models/Product.ts
 import mongoose, { Document, Schema, Model } from "mongoose";
 import dbConnect from "../_lib/mongodb";
 
-// Define the TypeScript interface for a product
 export interface IProduct extends Document {
   name: string;
   description: string;
@@ -17,7 +15,6 @@ export interface IProduct extends Document {
   updatedAt: Date;
 }
 
-// Define the MongoDB schema for a product
 const ProductSchema: Schema = new Schema(
   {
     name: {
@@ -67,21 +64,17 @@ const ProductSchema: Schema = new Schema(
     },
   },
   {
-    timestamps: true, // Automatically add createdAt and updatedAt fields
+    timestamps: true,
   }
 );
 
-// Add indexes for better query performance
 ProductSchema.index({ name: "text", description: "text" });
 ProductSchema.index({ category: 1 });
-// ProductSchema.index({ sku: 1 });
 
-// Add a virtual field for discounted price (example of virtual field)
 ProductSchema.virtual("discountedPrice").get(function (this: IProduct) {
-  return this.price * 0.9; // 10% discount as an example
+  return this.price * 0.9;
 });
 
-// Add a pre-save hook to check inventory and mark availability
 ProductSchema.pre("save", function (this: IProduct, next) {
   if (this.stockQuantity <= 0) {
     this.isAvailable = false;
@@ -89,26 +82,21 @@ ProductSchema.pre("save", function (this: IProduct, next) {
   next();
 });
 
-// Create or get the Product model
 let Product: Model<IProduct>;
 
 try {
-  // Check if the model already exists to prevent model overwrite error
   Product = mongoose.model<IProduct>("Product");
 } catch {
-  // If model doesn't exist, create a new one
   Product = mongoose.model<IProduct>("Product", ProductSchema);
 }
 
 export default Product;
 
-// Helper function to ensure MongoDB connection before using the model
 export async function getProductModel(): Promise<Model<IProduct>> {
   await dbConnect();
   return Product;
 }
 
-// Example usage functions for CRUD operations
 export async function createProduct(
   productData: Partial<IProduct>
 ): Promise<IProduct> {

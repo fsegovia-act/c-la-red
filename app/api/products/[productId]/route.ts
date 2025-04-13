@@ -1,4 +1,3 @@
-// app/api/products/[productId]/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import dbConnect from '../../_lib/mongodb';
 import Product from '../../_models/Products';
