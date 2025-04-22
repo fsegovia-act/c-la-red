@@ -17,6 +17,8 @@ interface Product {
   tags?: string[];
 }
 
+const NEXT_PUBLIC_S3_BASE_URL = process.env.NEXT_PUBLIC_S3_BASE_URL;
+
 export default function ProductDetailsByCodePage() {
   const params = useParams();
   const router = useRouter();
@@ -88,9 +90,8 @@ export default function ProductDetailsByCodePage() {
           {product.imageUrl ? (
             <div className="relative h-96 w-full rounded-lg overflow-hidden">
               <Image
-                src={product.imageUrl}
+                src={`${NEXT_PUBLIC_S3_BASE_URL}${product.imageUrl}`}
                 alt={product.name}
-                onError={() => setProduct({...product, imageUrl: "/default-product.jpg"})}
                 fill
                 className="object-cover"
               />
