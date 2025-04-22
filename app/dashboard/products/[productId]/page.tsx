@@ -1,7 +1,6 @@
-'use client';
-
-import { useState, useEffect } from 'react';
-import Image from 'next/image';
+"use client";
+import { useState, useEffect } from "react";
+import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 
 interface Product {
@@ -16,6 +15,8 @@ interface Product {
   imageUrl?: string;
   tags?: string[];
 }
+
+const NEXT_PUBLIC_S3_BASE_URL = process.env.NEXT_PUBLIC_S3_BASE_URL;
 
 export default function ProductDetailsPage() {
   const params = useParams();
@@ -37,7 +38,7 @@ export default function ProductDetailsPage() {
           setProduct(data.data);
         } else {
           router.push("/not-found");
-        }        
+        }
       } catch (err) {
         setError(
           err instanceof Error ? err.message : "An unknown error occurred"
@@ -88,9 +89,8 @@ export default function ProductDetailsPage() {
           {product.imageUrl ? (
             <div className="relative h-96 w-full rounded-lg overflow-hidden">
               <Image
-                src={product.imageUrl}
+                src={`${NEXT_PUBLIC_S3_BASE_URL}${product.imageUrl}`}
                 alt={product.name}
-                onError={() => setProduct({...product, imageUrl: "/default-product.jpg"})}
                 fill
                 className="object-cover"
               />

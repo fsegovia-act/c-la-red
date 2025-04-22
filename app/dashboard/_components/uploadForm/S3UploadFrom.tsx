@@ -1,13 +1,18 @@
 "use client";
-import { useState } from "react";
+import { useState, ChangeEvent, FormEvent } from "react";
 
-const UploadFrom = () => {
-  const [file, setFile] = useState(null);
-  const [uploading, setUploading] = useState(false);
+const UploadForm = () => {
+  const [file, setFile] = useState<File | null>(null);
+  const [uploading, setUploading] = useState<boolean>(false);
 
-  const handleFileChange = (e) => setFile(e.target.files[0]);
-  
-  const handleSubmit = async (e) => {
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (files && files.length > 0) {
+      setFile(files[0]);
+    }
+  };
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!file) return;
 
@@ -42,4 +47,4 @@ const UploadFrom = () => {
   );
 };
 
-export default UploadFrom;
+export default UploadForm;
