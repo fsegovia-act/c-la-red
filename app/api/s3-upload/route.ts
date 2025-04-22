@@ -10,11 +10,11 @@ export async function POST(request) {
 
     const buffer = Buffer.from(await file.arrayBuffer());
 
-    const fileName = await uploadFileToS3(buffer, file.name);
+    const filePath = await uploadFileToS3(buffer, file.name);
 
     return NextResponse.json({
       success: true,
-      data: `File uploaded (${fileName})`,
+      data: `File uploaded (${filePath})`,
     });
   } catch (error) {
     return NextResponse.json({ success: false, data: error.message });

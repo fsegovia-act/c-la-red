@@ -34,7 +34,7 @@ async function uploadFileToS3(file, fileName) {
   const command = new PutObjectCommand(params);
   await s3Client.send(command);
 
-  return fileName;
+  return `/images/products/${fileName}`;
 }
 
 export default uploadFileToS3;
