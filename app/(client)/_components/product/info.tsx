@@ -1,6 +1,15 @@
 "use client";
 
 import Image from "next/image";
+import { usePathname, useSearchParams } from "next/navigation";
+import {
+  WhatsappShareButton,
+  WhatsappIcon,
+  FacebookMessengerShareButton,
+  FacebookMessengerIcon,
+  EmailShareButton,
+  EmailIcon,
+} from "next-share";
 import { Product } from "../../_lib/interfaces";
 
 interface ProductProps {
@@ -8,8 +17,15 @@ interface ProductProps {
 }
 
 const NEXT_PUBLIC_S3_BASE_URL = process.env.NEXT_PUBLIC_S3_BASE_URL;
+const NEXT_PUBLIC_PHONE_NUMBER = process.env.NEXT_PUBLIC_PHONE_NUMBER;
 
 const InfoProduct: React.FC<ProductProps> = ({ product }: ProductProps) => {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const fullUrl = `${window.location.origin}${pathname}${
+    searchParams.toString() ? `?${searchParams.toString()}` : ""
+  }`;
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
       <div className="product-image">
@@ -82,15 +98,48 @@ const InfoProduct: React.FC<ProductProps> = ({ product }: ProductProps) => {
         )}
 
         <button
-          className={`w-full py-3 px-4 rounded-lg font-medium ${
+          className={`w-full py-3 px-4 rounded-lg font-medium mb-5 ${
             product.isAvailable
               ? "bg-blue-600 text-white hover:bg-blue-700"
               : "bg-gray-300 text-gray-500 cursor-not-allowed"
           }`}
           disabled={!product.isAvailable}
         >
-          {product.isAvailable ? "Contact" : "Out of Stock"}
+          <a
+            href={`https://wa.me/${NEXT_PUBLIC_PHONE_NUMBER}?text=Hola%20*C-La-Red*,%20acabo%20de%20visualizar%20el%20producto%20_*${product.name}%20-%20${product.sku}*_%20dentro%20de%20su%20sitio%20web%20y%20me%20gustaría%20ser%20contactado/a%20para%20obtener%20más%20información.%0A${fullUrl}`}
+            target="blanck"
+          >
+            {product.isAvailable ? "Contact" : "Out of Stock"}
+          </a>
         </button>
+
+        <div
+          className={`w-full py-3 px-4 rounded-lg font-medium flex justify-around pt-4`}
+        >
+          <p>Share:</p>
+
+          <WhatsappShareButton
+            url={fullUrl}
+            title={`Consulta de cliente sobre prodcuto ${product.name} - ${product.sku}`}
+            separator=":: "
+          >
+            <WhatsappIcon size={40} round />
+          </WhatsappShareButton>
+
+          <FacebookMessengerShareButton url={fullUrl} appId={""}>
+            <FacebookMessengerIcon size={40} round />
+          </FacebookMessengerShareButton>
+
+          <EmailShareButton
+            url={fullUrl}
+            subject={"Consulta de cliente"}
+            body={
+              "Hola *C-La-Red*, acabo de visualizar el producto _*${product.name} - ${product.sku}*_ dentro de su sitio web y me gustaría ser contactado/a para obtener más información."
+            }
+          >
+            <EmailIcon size={40} round />
+          </EmailShareButton>
+        </div>
       </div>
     </div>
   );
