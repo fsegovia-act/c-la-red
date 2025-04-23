@@ -22,7 +22,7 @@ const s3Client = new S3Client({
   },
 });
 
-async function uploadFileToS3(file, fileName) {
+export async function uploadFileToS3(file, fileName) {
   const fileBuffer = file;
   const params = {
     Bucket: S3_BUCKET_NAME,
@@ -37,4 +37,17 @@ async function uploadFileToS3(file, fileName) {
   return `/images/products/${fileName}`;
 }
 
-export default uploadFileToS3;
+export async function editFileInS3(file, filePath) {
+  const fileBuffer = file;
+  const params = {
+    Bucket: S3_BUCKET_NAME,
+    Key: filePath,
+    Body: fileBuffer,
+    ContentType: "image/jpg",
+  };
+
+  const command = new PutObjectCommand(params);
+  await s3Client.send(command);
+
+  return filePath;
+}
