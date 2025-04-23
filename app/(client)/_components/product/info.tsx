@@ -8,6 +8,7 @@ interface ProductProps {
 }
 
 const NEXT_PUBLIC_S3_BASE_URL = process.env.NEXT_PUBLIC_S3_BASE_URL;
+const NEXT_PUBLIC_PHONE_NUMBER = process.env.NEXT_PUBLIC_PHONE_NUMBER;
 
 const InfoProduct: React.FC<ProductProps> = ({ product }: ProductProps) => {
   return (
@@ -89,7 +90,12 @@ const InfoProduct: React.FC<ProductProps> = ({ product }: ProductProps) => {
           }`}
           disabled={!product.isAvailable}
         >
-          {product.isAvailable ? "Contact" : "Out of Stock"}
+          <a
+            href={`https://wa.me/${NEXT_PUBLIC_PHONE_NUMBER}?text=Hola%20*C-La-Red*,%20acabo%20de%20visualizar%20el%20producto%20_*${product.name}%20-%20${product.sku}*_%20dentro%20de%20su%20sitio%20web%20y%20me%20gustaría%20ser%20contactado/a%20para%20obtener%20más%20información.`}
+            target="blanck"
+          >
+            {product.isAvailable ? "Contact" : "Out of Stock"}
+          </a>
         </button>
       </div>
     </div>
