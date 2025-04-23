@@ -16,6 +16,7 @@ interface ProductFormProps {
   setError: Dispatch<SetStateAction<string | null>>;
   isLoading: boolean;
   product: Product;
+  setTypeAction: Dispatch<SetStateAction<string>>
 }
 
 const NEXT_PUBLIC_S3_BASE_URL = process.env.NEXT_PUBLIC_S3_BASE_URL;
@@ -26,6 +27,7 @@ const EditProduct: React.FC<ProductFormProps> = ({
   setError,
   isLoading,
   product,
+  setTypeAction,
 }: ProductFormProps) => {
   const [form, setForm] = useState<EditProductForm>({
     _id: product._id,
@@ -103,6 +105,7 @@ const EditProduct: React.FC<ProductFormProps> = ({
           stockQuantity: "",
           imageUrl: "",
         });
+        setTypeAction("info");
       } else {
         setError(data.error || "Failed to update product");
       }
