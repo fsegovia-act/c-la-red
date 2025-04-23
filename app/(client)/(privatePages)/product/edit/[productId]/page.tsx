@@ -13,6 +13,7 @@ export default function EditProductPage() {
 
   const [product, setProduct] = useState<Product | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [typeAction, setTypeAction] = useState<string>("edit");
 
   const [error, setError] = useState<string | null>(null);
 
@@ -74,14 +75,17 @@ export default function EditProductPage() {
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-6">Edit Product Page (Private)</h1>
-      <EditProduct
-        product={product}
-        fetchProduct={fetchProduct}
-        setIsLoading={setIsLoading}
-        setError={setError}
-        isLoading={isLoading}
-      />
-      <InfoProduct product={product} />
+      {typeAction === "edit" && (
+        <EditProduct
+          product={product}
+          fetchProduct={fetchProduct}
+          setIsLoading={setIsLoading}
+          setError={setError}
+          isLoading={isLoading}
+          setTypeAction={setTypeAction}
+        />
+      )}
+      {typeAction === "info" && <InfoProduct product={product} />}
     </div>
   );
 }
