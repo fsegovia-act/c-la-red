@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import dbConnect from "../_lib/mongodb";
 import Product from "../_models/Products";
-import uploadFileToS3 from "../_lib/aws-s3";
+import { uploadFileToS3 } from "../_lib/aws-s3";
 
 export async function GET() {
   await dbConnect();
