@@ -1,6 +1,7 @@
 "use client";
-import { useState, useEffect } from "react";
+
 import Image from "next/image";
+import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 
 interface Product {
@@ -18,10 +19,10 @@ interface Product {
 
 const NEXT_PUBLIC_S3_BASE_URL = process.env.NEXT_PUBLIC_S3_BASE_URL;
 
-export default function ProductDetailsPage() {
+export default function ProductDetailsByCodePage() {
   const params = useParams();
   const router = useRouter();
-  const productId = params.productId as string;
+  const productCode = params.productCode as string;
 
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
@@ -31,7 +32,7 @@ export default function ProductDetailsPage() {
     async function fetchProduct() {
       try {
         setLoading(true);
-        const response = await fetch(`/api/products/${productId}`);
+        const response = await fetch(`/api/product/${productCode}`);
         const data = await response.json();
 
         if (data.success) {
@@ -48,10 +49,10 @@ export default function ProductDetailsPage() {
       }
     }
 
-    if (productId) {
+    if (productCode) {
       fetchProduct();
     }
-  }, [productId]);
+  }, [productCode]);
 
   if (loading) {
     return (
@@ -84,6 +85,7 @@ export default function ProductDetailsPage() {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
+      <h1 className="text-3xl font-bold mb-6">Product Details Page (public)</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div className="product-image">
           {product.imageUrl ? (

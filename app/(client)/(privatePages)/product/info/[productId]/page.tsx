@@ -1,7 +1,6 @@
-'use client';
-
-import { useState, useEffect } from 'react';
-import Image from 'next/image';
+"use client";
+import { useState, useEffect } from "react";
+import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 
 interface Product {
@@ -19,10 +18,10 @@ interface Product {
 
 const NEXT_PUBLIC_S3_BASE_URL = process.env.NEXT_PUBLIC_S3_BASE_URL;
 
-export default function ProductDetailsByCodePage() {
+export default function ProductDetailsPage() {
   const params = useParams();
   const router = useRouter();
-  const productCode = params.productCode as string;
+  const productId = params.productId as string;
 
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
@@ -32,14 +31,14 @@ export default function ProductDetailsByCodePage() {
     async function fetchProduct() {
       try {
         setLoading(true);
-        const response = await fetch(`/api/product/${productCode}`);
+        const response = await fetch(`/api/products/${productId}`);
         const data = await response.json();
 
         if (data.success) {
           setProduct(data.data);
         } else {
           router.push("/not-found");
-        }        
+        }
       } catch (err) {
         setError(
           err instanceof Error ? err.message : "An unknown error occurred"
@@ -49,10 +48,10 @@ export default function ProductDetailsByCodePage() {
       }
     }
 
-    if (productCode) {
+    if (productId) {
       fetchProduct();
     }
-  }, [productCode]);
+  }, [productId]);
 
   if (loading) {
     return (
@@ -85,6 +84,7 @@ export default function ProductDetailsByCodePage() {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
+      <h1 className="text-3xl font-bold mb-6">Info Product Page (Private)</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div className="product-image">
           {product.imageUrl ? (

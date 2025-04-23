@@ -2,6 +2,7 @@
 
 import { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import { NextPage } from "next";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 
 interface Product {
@@ -28,7 +29,7 @@ interface ProductForm {
 
 const NEXT_PUBLIC_S3_BASE_URL = process.env.NEXT_PUBLIC_S3_BASE_URL;
 
-const ProductsPage: NextPage = () => {
+const CreateProductPage: NextPage = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [form, setForm] = useState<ProductForm>({
     name: "",
@@ -44,6 +45,7 @@ const ProductsPage: NextPage = () => {
   );
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     fetchProducts();
@@ -139,7 +141,7 @@ const ProductsPage: NextPage = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6">Products Management</h1>
+      <h1 className="text-3xl font-bold mb-6">Create Product Page (Private)</h1>
 
       {error && (
         <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
@@ -334,7 +336,13 @@ const ProductsPage: NextPage = () => {
               </thead>
               <tbody>
                 {products.map((product) => (
-                  <tr key={product._id} className="hover:bg-gray-50">
+                  <tr
+                    key={product._id}
+                    className="hover:bg-gray-200 hover:cursor-pointer"
+                    onClick={() =>
+                      router.push(`/product/info/${product._id}`)
+                    }
+                  >
                     <td className="py-2 px-4 border-b">{product.name}</td>
                     <td className="py-2 px-4 border-b">{product.sku}</td>
                     <td className="py-2 px-4 border-b">
@@ -366,4 +374,4 @@ const ProductsPage: NextPage = () => {
   );
 };
 
-export default ProductsPage;
+export default CreateProductPage;
