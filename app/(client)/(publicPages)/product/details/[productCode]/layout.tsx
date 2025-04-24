@@ -12,6 +12,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { productCode } = await params;
   const productNotFound = {
     title: "Product not found",
+    description: "No description",
     openGraph: {
       images: ["product-not-found.jpg"],
     },
@@ -34,6 +35,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     title: product.name,
+    description: product.description,
     openGraph: {
       images: [`${NEXT_PUBLIC_S3_BASE_URL}${product.imageUrl}`],
     },
