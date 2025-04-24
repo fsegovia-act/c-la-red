@@ -3,7 +3,8 @@
 import { useState, useEffect } from "react";
 import { NextPage } from "next";
 import { Product } from "../../_lib/interfaces";
-import ProductList from "../../_components/product/list";
+import ProductGrid from "../../_components/product/ProductGrid";
+
 
 const ProductsPage: NextPage = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -42,7 +43,7 @@ const ProductsPage: NextPage = () => {
           {error}
         </div>
       )}
-      <ProductList products={products} isLoading={isLoading} type={"public"}/>
+      <ProductGrid products={products} />
     </div>
   );
 };
