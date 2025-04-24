@@ -120,7 +120,7 @@ const InfoProduct: React.FC<ProductProps> = ({ product }: ProductProps) => {
 
           <WhatsappShareButton
             url={fullUrl}
-            title={`Consulta de cliente sobre prodcuto ${product.name} - ${product.sku}`}
+            title={`Hola, quisiera compartir contigo el producto ${product.name} - ${product.sku} que vi en el sitio web de C-La-Red y que creo que podría ser de tu interés. Saludos.`}
             separator=":: "
           >
             <WhatsappIcon size={40} round />
@@ -132,10 +132,8 @@ const InfoProduct: React.FC<ProductProps> = ({ product }: ProductProps) => {
 
           <EmailShareButton
             url={fullUrl}
-            subject={"Consulta de cliente"}
-            body={
-              "Hola *C-La-Red*, acabo de visualizar el producto _*${product.name} - ${product.sku}*_ dentro de su sitio web y me gustaría ser contactado/a para obtener más información."
-            }
+            subject={`C-La-Red - ${product.name}`}
+            body={`Hola, acabo de visualizar el producto ${product.name} - ${product.sku} dentro del sitio sitio web de C-La-Red y me gustaría compartir el enlace contigo porque creo que podría interesarte. Saludos.`}
           >
             <EmailIcon size={40} round />
           </EmailShareButton>
