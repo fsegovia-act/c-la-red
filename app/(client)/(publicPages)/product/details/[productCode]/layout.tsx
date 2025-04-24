@@ -4,6 +4,10 @@ type Props = {
   params: Promise<{ productCode: string }>;
 };
 
+const NEXT_PUBLIC_API_URL =
+  process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
+const NEXT_PUBLIC_S3_BASE_URL = process.env.NEXT_PUBLIC_S3_BASE_URL;
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { productCode } = await params;
   const productNotFound = {
@@ -12,9 +16,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       images: ["product-not-found.jpg"],
     },
   };
-
-  const NEXT_PUBLIC_API_URL =
-    process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
 
   const response = await fetch(
     `${NEXT_PUBLIC_API_URL}/api/product/${productCode}`,
@@ -34,7 +35,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: product.name,
     openGraph: {
-      images: [product.imageUrl],
+      images: [`${NEXT_PUBLIC_S3_BASE_URL}${product.imageUrl}`],
     },
   };
 }
