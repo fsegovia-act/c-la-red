@@ -1,44 +1,57 @@
 "use client";
 
-import Link from "next/link";
-import { NextPage } from "next";
+import { useState, useEffect } from "react";
+import Head from "next/head";
+import MainNavigationBar from "./(client)/_components/navigation/mainNavigationBar";
+import MainBanner from "./(client)/_components/banner/mainBanner";
+import CategoryBanner from "./(client)/_components/banner/categoryBanner";
+import FeaturedProductsBanner from "./(client)/_components/banner/featuredProductsBanner";
+import SpecialOffersBanner from "./(client)/_components/banner/specialOffersBanner";
+import AdditionalInformationBanner from "./(client)/_components/banner/additionalInformationBanner";
+import NewslatterBanner from "./(client)/_components/banner/newslatterBanner";
+import MainFooter from "./(client)/_components/footer/mainFooter";
 
-const HomePage: NextPage = () => {
+const NEXT_PUBLIC_NAME = process.env.NEXT_PUBLIC_NAME;
+
+const HomePage = () => {
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (!isClient) {
+    return null;
+  }
+
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6">Home Page (public)</h1>
-      <h5 className="text-1xl font-bold mb-3 mt-3">Private Pages</h5>
-      <ul>
-        <li>
-          <Link href="/product/info/67fbcb36df0604fa89fbed66">Info Page</Link>
-        </li>
-        <li>
-          <Link href="/product/edit/67fbcb36df0604fa89fbed66">
-            Edit Product Page
-          </Link>
-        </li>
-        <li>
-          <Link href="/product/create">Create Product Page</Link>
-        </li>
-        <li>
-          <Link href="/products/management">Product Management Page</Link>
-        </li>
-        <li>
-          <Link href="/settings">Settings Page</Link>
-        </li>
-      </ul>
-      <h5 className="text-1xl font-bold mb-3 mt-3">Public Pages</h5>
-      <ul>
-        <li>
-          <Link href="/products">Product List Page</Link>
-        </li>
-        <li>
-          <Link href="/product/details/CODE002">Product Details Page</Link>
-        </li>
-        <li>
-          <Link href="/sign-in">Sign In Page</Link>
-        </li>
-      </ul>
+    <div className="min-h-screen bg-gray-100">
+      <Head>
+        <title>{NEXT_PUBLIC_NAME} | Tienda Online | Inicio</title>
+        <meta
+          name="description"
+          content="Encuentra los mejores productos para ti"
+        />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+
+      <MainNavigationBar />
+
+      <main>
+        <MainBanner />
+
+        <CategoryBanner />
+
+        <FeaturedProductsBanner />
+
+        <SpecialOffersBanner />
+
+        <AdditionalInformationBanner />
+
+        <NewslatterBanner />
+      </main>
+
+      <MainFooter />
     </div>
   );
 };
