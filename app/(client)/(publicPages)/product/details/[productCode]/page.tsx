@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { Product } from "../../../../_lib/interfaces";
-import InfoProduct from "../../../../_components/product/Info";
+import InfoProduct from "../../../../_components/product/info";
 import MainNavigationBar from "../../../../_components/navigation/mainNavigationBar";
 import MainFooter from "../../../../_components/footer/mainFooter";
 import AdditionalInformationBanner from "../../../../_components/banner/additionalInformationBanner";

@@ -3,8 +3,8 @@
 import { useState, useEffect } from "react";
 import { NextPage } from "next";
 import { Product } from "../../../_lib/interfaces";
-import ProductList from "../../../_components/product/List";
-import CreateProduct from "../../../_components/product/Create";
+import ProductList from "../../../_components/product/list";
+import CreateProduct from "../../../_components/product/create";
 
 const CreateProductPage: NextPage = () => {
   const [products, setProducts] = useState<Product[]>([]);
