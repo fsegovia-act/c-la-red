@@ -69,7 +69,7 @@ const SpecialOffersBanner = () => {
                     ¡Solo quedan {offer.stockQuantity} disponibles!
                   </span>
                   <button className="bg-blue-700 text-white px-6 py-2 rounded hover:bg-blue-800 transition duration-300">
-                    Comprar ahora
+                    Ver ahora
                   </button>
                 </div>
               </div>
