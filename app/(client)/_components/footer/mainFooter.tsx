@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { BUSINESS_ADDRESS, BUSINESS_EMAIL, BUSINESS_NAME, BUSINESS_PHONE_NUMBER } from "../../_lib/constant";
 
 const CATEGORIES = [
   { id: 1, name: "Electrónicos", icon: "🖥️", url: "/category/electronics" },
@@ -10,11 +11,6 @@ const CATEGORIES = [
   { id: 5, name: "Ropa", icon: "👕", url: "/category/clothing" },
 ];
 
-const NEXT_PUBLIC_PHONE_NUMBER = process.env.NEXT_PUBLIC_PHONE_NUMBER;
-const NEXT_PUBLIC_EMAIL = process.env.NEXT_PUBLIC_EMAIL;
-const NEXT_PUBLIC_ADDRESS = process.env.NEXT_PUBLIC_ADDRESS;
-const NEXT_PUBLIC_NAME = process.env.NEXT_PUBLIC_NAME;
-
 const MainFooter = () => {
   return (
     <footer className="bg-gray-800 text-white py-10">
@@ -22,7 +18,7 @@ const MainFooter = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
             <h3 className="text-lg font-bold mb-4">
-              {NEXT_PUBLIC_NAME} Tienda Online
+              {BUSINESS_NAME} Tienda Online
             </h3>
             <p className="text-gray-300 mb-4">
               Ofreciendo los mejores productos desde 2020. Tu satisfacción es
@@ -92,16 +88,16 @@ const MainFooter = () => {
           <div>
             <h3 className="text-lg font-bold mb-4">Contacto</h3>
             <ul className="space-y-2 text-gray-300">
-              <li>Dirección: {NEXT_PUBLIC_ADDRESS}</li>
-              <li>Teléfono: {NEXT_PUBLIC_PHONE_NUMBER}</li>
-              <li>Email: {NEXT_PUBLIC_EMAIL}</li>
+              <li>Dirección: {BUSINESS_ADDRESS}</li>
+              <li>Teléfono: {BUSINESS_PHONE_NUMBER}</li>
+              <li>Email: {BUSINESS_EMAIL}</li>
               <li>Horario: Lun-Vie 9:00-18:00</li>
             </ul>
           </div>
         </div>
         <div className="border-t border-gray-700 mt-8 pt-6 text-center text-gray-400">
           <p>
-            &copy; {new Date().getFullYear()} {NEXT_PUBLIC_NAME} Tienda Online.
+            &copy; {new Date().getFullYear()} {BUSINESS_NAME} Tienda Online.
             Todos los derechos reservados.
           </p>
         </div>

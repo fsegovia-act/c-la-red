@@ -10,8 +10,7 @@ import SpecialOffersBanner from "./(client)/_components/banner/specialOffersBann
 import AdditionalInformationBanner from "./(client)/_components/banner/additionalInformationBanner";
 import NewslatterBanner from "./(client)/_components/banner/newslatterBanner";
 import MainFooter from "./(client)/_components/footer/mainFooter";
-
-const NEXT_PUBLIC_NAME = process.env.NEXT_PUBLIC_NAME;
+import { BUSINESS_NAME } from "./(client)/_lib/constant";
 
 const HomePage = () => {
   const [isClient, setIsClient] = useState(false);
@@ -27,7 +26,7 @@ const HomePage = () => {
   return (
     <div className="min-h-screen bg-gray-100">
       <Head>
-        <title>{NEXT_PUBLIC_NAME} | Tienda Online | Inicio</title>
+        <title>{BUSINESS_NAME} | Tienda Online | Inicio</title>
         <meta
           name="description"
           content="Encuentra los mejores productos para ti"
