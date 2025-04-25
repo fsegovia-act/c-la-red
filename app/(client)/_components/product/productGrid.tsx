@@ -1,6 +1,6 @@
 
 import { Product } from "../../_lib/interfaces";
-import ProductCard from "./ProductCard";
+import ProductCard from "./productCard";
 
 
 interface ProductGridProps {
