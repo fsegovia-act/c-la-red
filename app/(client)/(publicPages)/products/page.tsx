@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { NextPage } from "next";
 import { Product } from "../../_lib/interfaces";
-import ProductGrid from "../../_components/product/ProductGrid";
+import ProductGrid from "../../_components/product/productGrid";
 import MainNavigationBar from "../../_components/navigation/mainNavigationBar";
 import MainFooter from "../../_components/footer/mainFooter";
 
