@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { NextPage } from "next";
 import { useRouter } from "next/navigation";
 import { Product } from "../../../_lib/interfaces";
-import ProductList from "../../../_components/product/list";
+import ProductList from "../../../_components/product/List";
 
 const ProductManagementPage: NextPage = () => {
   const [products, setProducts] = useState<Product[]>([]);

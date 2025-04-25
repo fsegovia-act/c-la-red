@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { Product } from "../../../../_lib/interfaces";
-import InfoProduct from "../../../../_components/product/iInfo";
+import InfoProduct from "../../../../_components/product/Info";
 
 
 export default function ProductDetailsPage() {

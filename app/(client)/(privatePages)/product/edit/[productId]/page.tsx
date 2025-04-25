@@ -3,8 +3,8 @@
 import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { Product } from "../../../../_lib/interfaces";
-import InfoProduct from "../../../../_components/product/iInfo";
-import EditProduct from "../../../../_components/product/edit";
+import InfoProduct from "../../../../_components/product/Info";
+import EditProduct from "../../../../_components/product/Edit";
 
 export default function EditProductPage() {
   const params = useParams();
