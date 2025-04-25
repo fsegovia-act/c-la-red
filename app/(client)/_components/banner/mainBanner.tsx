@@ -1,8 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-
-const NEXT_PUBLIC_NAME = process.env.NEXT_PUBLIC_NAME;
+import { BUSINESS_NAME } from "../../_lib/constant";
 
 const MainBanner = () => {
   const router = useRouter();
@@ -13,7 +12,7 @@ const MainBanner = () => {
         <div className="flex flex-col md:flex-row items-center">
           <div className="md:w-1/2 mb-8 md:mb-0">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">
-              Bienvenido a {NEXT_PUBLIC_NAME} Tienda Online
+              Bienvenido a {BUSINESS_NAME} Tienda Online
             </h1>
             <p className="text-xl mb-6">
               Los mejores productos, los mejores precios. Descubre nuestro

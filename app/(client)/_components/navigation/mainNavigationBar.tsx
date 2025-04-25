@@ -1,8 +1,7 @@
 "use client";
 
 import Link from "next/link";
-
-const NEXT_PUBLIC_NAME = process.env.NEXT_PUBLIC_NAME;
+import { BUSINESS_NAME } from "../../_lib/constant";
 
 const MainNavigationBar = () => {
   return (
@@ -11,7 +10,7 @@ const MainNavigationBar = () => {
         <div className="flex justify-between items-center">
           <div className="flex items-center">
             <Link href="/" className="text-2xl font-bold text-blue-900">
-              {NEXT_PUBLIC_NAME}
+              {BUSINESS_NAME}
             </Link>
           </div>
           <div className="flex-1 mx-10">
