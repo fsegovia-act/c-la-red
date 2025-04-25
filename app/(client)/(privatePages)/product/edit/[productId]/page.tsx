@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { Product } from "../../../../_lib/interfaces";
-import InfoProduct from "../../../../_components/product/info";
+import InfoProduct from "../../../../_components/product/iInfo";
 import EditProduct from "../../../../_components/product/edit";
 
 export default function EditProductPage() {

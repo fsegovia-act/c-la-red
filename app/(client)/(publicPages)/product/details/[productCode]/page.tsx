@@ -3,7 +3,10 @@
 import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { Product } from "../../../../_lib/interfaces";
-import InfoProduct from "../../../../_components/product/info";
+import InfoProduct from "../../../../_components/product/iInfo";
+import MainNavigationBar from "../../../../_components/navigation/mainNavigationBar";
+import MainFooter from "../../../../_components/footer/mainFooter";
+import AdditionalInformationBanner from "../../../../_components/banner/additionalInformationBanner";
 
 export default function ProductDetailsByCodePage() {
   const params = useParams();
@@ -70,9 +73,19 @@ export default function ProductDetailsByCodePage() {
   }
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6">Product Details Page (public)</h1>
-      <InfoProduct product={product} />
+    <div className="flex flex-col justify-between min-h-screen">
+      <MainNavigationBar />
+
+      <div className="max-w-6xl mx-auto px-4 py-8">
+        <h1 className="text-3xl font-bold mb-6">
+          Product Details Page (public)
+        </h1>
+        <InfoProduct product={product} />
+      </div>
+
+      <AdditionalInformationBanner />
+
+      <MainFooter />
     </div>
   );
 }
