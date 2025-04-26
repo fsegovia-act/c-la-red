@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { Product } from "../../../../_lib/interfaces";
 import InfoProduct from "../../../../_components/product/info";
-
+import AdminNavigationBar from "../../../../_components/navigation/adminNavigationBar";
 
 export default function ProductDetailsPage() {
   const params = useParams();
@@ -70,9 +70,24 @@ export default function ProductDetailsPage() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6">Info Product Page (Private)</h1>
-      <InfoProduct product={product} />
-    </div>
+    <>
+      <AdminNavigationBar />
+      <div className="container mx-auto px-4 py-8">
+        <div className="flex justify-between">
+          <h1 className="text-3xl font-bold mb-6">
+            Info Product Page (Private)
+          </h1>
+
+          <button
+            onClick={() => router.push(`/product/edit/${product._id}`)}
+            className="bg-blue-700 text-white px-4 py-2 rounded hover:bg-blue-800 transition duration-300 hover:cursor-pointer max-h-[40px] hover:cursor-pointer"
+          >
+            Edit Product
+          </button>
+        </div>
+
+        <InfoProduct product={product} />
+      </div>
+    </>
   );
 }
