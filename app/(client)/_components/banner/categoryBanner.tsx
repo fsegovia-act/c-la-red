@@ -3,11 +3,11 @@
 import Link from "next/link";
 
 const CATEGORIES = [
-  { id: 1, name: "Electrónicos", icon: "🖥️", url: "/category/electronics" },
-  { id: 2, name: "Hogar", icon: "🏠", url: "/category/home" },
-  { id: 3, name: "Tecnología", icon: "📱", url: "/category/tech" },
-  { id: 4, name: "Accesorios", icon: "⌚", url: "/category/accessories" },
-  { id: 5, name: "Ropa", icon: "👕", url: "/category/clothing" },
+  { id: 1, name: "Electrónicos", icon: "🖥️", slug: "electronics" },
+  { id: 2, name: "Hogar", icon: "🏠", slug: "home" },
+  { id: 3, name: "Tecnología", icon: "📱", slug: "tech" },
+  { id: 4, name: "Accesorios", icon: "⌚", slug: "accessories" },
+  { id: 5, name: "Ropa", icon: "👕", slug: "clothing" },
 ];
 
 const CategoryBanner = () => {
@@ -20,7 +20,7 @@ const CategoryBanner = () => {
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
           {CATEGORIES.map((category) => (
             <Link
-              href={category.url}
+              href={`/category/${category.slug}`}
               key={category.id}
               className="bg-gray-100 rounded-lg p-6 text-center hover:shadow-lg transition duration-300"
             >

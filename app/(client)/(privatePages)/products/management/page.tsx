@@ -2,16 +2,13 @@
 
 import { useState, useEffect } from "react";
 import { NextPage } from "next";
-import { useRouter } from "next/navigation";
 import { Product } from "../../../_lib/interfaces";
 import ProductList from "../../../_components/product/list";
 
 const ProductManagementPage: NextPage = () => {
   const [products, setProducts] = useState<Product[]>([]);
-
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-  const router = useRouter();
 
   useEffect(() => {
     fetchProducts();
