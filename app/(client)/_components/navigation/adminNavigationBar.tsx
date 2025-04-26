@@ -10,7 +10,8 @@ const AdminNavigationBar = () => {
         <div className="flex justify-between items-center">
           <div className="flex items-center">
             <Link href="/" className="text-2xl font-bold text-blue-900">
-              {BUSINESS_NAME} (Admin)           </Link>
+              {BUSINESS_NAME} (Admin)
+            </Link>
           </div>
           <div className="flex-1 mx-10">
             <div className="relative">
@@ -32,7 +33,10 @@ const AdminNavigationBar = () => {
                 </Link>
               </li>
               <li>
-                <Link href="/products/management" className="hover:text-blue-700">
+                <Link
+                  href="/products/management"
+                  className="hover:text-blue-700"
+                >
                   Management
                 </Link>
               </li>
