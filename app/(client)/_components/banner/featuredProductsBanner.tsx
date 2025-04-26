@@ -1,62 +1,40 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { formatPrice } from "../../_lib/helpers";
 import { Product } from "../../_lib/interfaces";
 import { useRouter } from "next/navigation";
 
-const FEATURED_PRODUCTS: Product[] = [
-  {
-    _id: "1",
-    name: "Producto Premium 1",
-    description: "Este es un producto destacado de alta calidad",
-    price: 999.99,
-    sku: "SKU001",
-    category: "Electrónicos",
-    stockQuantity: 10,
-    isAvailable: true,
-    imageUrl: "/images/product-1.jpg",
-    tags: ["premium", "nuevo", "destacado"],
-  },
-  {
-    _id: "2",
-    name: "Producto Más Vendido",
-    description: "Nuestro producto más popular del mes",
-    price: 499.5,
-    sku: "SKU002",
-    category: "Hogar",
-    stockQuantity: 25,
-    isAvailable: true,
-    imageUrl: "/images/product-2.jpg",
-    tags: ["bestseller", "oferta"],
-  },
-  {
-    _id: "3",
-    name: "Novedad Temporada",
-    description: "La última novedad en nuestro catálogo",
-    price: 1299.99,
-    sku: "SKU003",
-    category: "Tecnología",
-    stockQuantity: 5,
-    isAvailable: true,
-    imageUrl: "/images/product-3.jpg",
-    tags: ["nuevo", "limitado"],
-  },
-  {
-    _id: "4",
-    name: "Oferta Especial",
-    description: "Aprovecha esta oferta por tiempo limitado",
-    price: 299.99,
-    sku: "SKU004",
-    category: "Accesorios",
-    stockQuantity: 50,
-    isAvailable: true,
-    imageUrl: "/images/product-4.jpg",
-    tags: ["oferta", "descuento"],
-  },
-];
+const NEXT_PUBLIC_S3_BASE_URL = process.env.NEXT_PUBLIC_S3_BASE_URL;
 
 const FeaturedProductsBanner = () => {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
   const router = useRouter();
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  const fetchProducts = async () => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      const res = await fetch("/api/products?page=1&limit=4&featured=true");
+      const data = await res.json();
+
+      if (data.success) {
+        setProducts(data.data);
+      } else {
+        setError("Failed to load products");
+      }
+    } catch (error) {
+      setError("Error connecting to the server");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <section className="py-12 bg-gray-100">
@@ -65,15 +43,19 @@ const FeaturedProductsBanner = () => {
           Productos destacados
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-          {FEATURED_PRODUCTS.map((product) => (
+          {products.map((product) => (
             <div
               key={product._id}
-              className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition duration-300"
+              className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition duration-300 flex flex-col justify-between"
             >
               <div className="h-48 bg-gray-200 flex items-center justify-center">
                 {product.imageUrl ? (
-                  <div className="relative w-full h-full">
-                    <span className="text-gray-500">Imagen del producto</span>
+                  <div className="relative w-full h-full overflow-hidden">
+                    <img
+                      src={`${NEXT_PUBLIC_S3_BASE_URL}${product.imageUrl}`}
+                      alt={product.name}
+                      className="w-full"
+                    />
                   </div>
                 ) : (
                   <span className="text-gray-500">Sin imagen</span>
@@ -81,12 +63,12 @@ const FeaturedProductsBanner = () => {
               </div>
               <div className="p-4">
                 <div className="flex items-center mb-1">
-                  {product.tags?.includes("nuevo") && (
+                  {product.tags?.includes("new") && (
                     <span className="bg-green-100 text-green-800 text-xs px-2 py-1 rounded mr-2">
                       Nuevo
                     </span>
                   )}
-                  {product.tags?.includes("oferta") && (
+                  {product.tags?.includes("offer") && (
                     <span className="bg-red-100 text-red-800 text-xs px-2 py-1 rounded mr-2">
                       Oferta
                     </span>
@@ -105,7 +87,12 @@ const FeaturedProductsBanner = () => {
                   <span className="text-sm text-gray-500">
                     Stock: {product.stockQuantity} und.
                   </span>
-                  <button className="bg-blue-700 text-white px-4 py-2 rounded hover:bg-blue-800 transition duration-300">
+                  <button
+                    onClick={() =>
+                      router.push(`/product/details/${product.sku}`)
+                    }
+                    className="bg-blue-700 text-white px-4 py-2 rounded hover:bg-blue-800 transition duration-300 hover:cursor-pointer"
+                  >
                     Ver más
                   </button>
                 </div>

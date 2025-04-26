@@ -1,36 +1,41 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { formatPrice } from "../../_lib/helpers";
 import { Product } from "../../_lib/interfaces";
+import { useRouter } from "next/navigation";
 
-const SPECIAL_OFFERS: Product[] = [
-  {
-    _id: "5",
-    name: "Super Descuento",
-    description: "50% de descuento solo hoy",
-    price: 149.99,
-    sku: "SKU005",
-    category: "Electrónicos",
-    stockQuantity: 3,
-    isAvailable: true,
-    imageUrl: "/images/offer-1.jpg",
-    tags: ["oferta", "descuento", "limitado"],
-  },
-  {
-    _id: "6",
-    name: "Pack Especial",
-    description: "Combo de productos con 30% de descuento",
-    price: 799.99,
-    sku: "SKU006",
-    category: "Hogar",
-    stockQuantity: 8,
-    isAvailable: true,
-    imageUrl: "/images/offer-2.jpg",
-    tags: ["pack", "oferta"],
-  },
-];
+const NEXT_PUBLIC_S3_BASE_URL = process.env.NEXT_PUBLIC_S3_BASE_URL;
 
 const SpecialOffersBanner = () => {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  const fetchProducts = async () => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      const res = await fetch("/api/products?page=3&limit=2&featured=true");
+      const data = await res.json();
+
+      if (data.success) {
+        setProducts(data.data);
+      } else {
+        setError("Failed to load products");
+      }
+    } catch (error) {
+      setError("Error connecting to the server");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <section className="py-12 bg-white">
       <div className="container mx-auto px-4">
@@ -38,13 +43,17 @@ const SpecialOffersBanner = () => {
           Ofertas especiales
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {SPECIAL_OFFERS.map((offer) => (
+          {products.map((offer) => (
             <div
               key={offer._id}
               className="flex flex-col md:flex-row bg-gradient-to-r from-yellow-50 to-yellow-100 rounded-lg shadow-md overflow-hidden"
             >
-              <div className="md:w-1/3 bg-gray-200 flex items-center justify-center p-6">
-                <span className="text-gray-500">Imagen de oferta</span>
+              <div className="md:w-1/3 bg-gray-200 flex items-center justify-center">
+                <img
+                  src={`${NEXT_PUBLIC_S3_BASE_URL}${offer.imageUrl}`}
+                  alt={offer.name}
+                  className="w-full"
+                />
               </div>
               <div className="md:w-2/3 p-6">
                 <div className="flex items-center mb-2">
@@ -68,7 +77,10 @@ const SpecialOffersBanner = () => {
                   <span className="text-sm text-red-600 font-medium">
                     ¡Solo quedan {offer.stockQuantity} disponibles!
                   </span>
-                  <button className="bg-blue-700 text-white px-6 py-2 rounded hover:bg-blue-800 transition duration-300">
+                  <button
+                    onClick={() => router.push(`/product/details/${offer.sku}`)}
+                    className="bg-blue-700 text-white px-6 py-2 rounded hover:bg-blue-800 transition duration-300 hover:cursor-pointer"
+                  >
                     Ver ahora
                   </button>
                 </div>
