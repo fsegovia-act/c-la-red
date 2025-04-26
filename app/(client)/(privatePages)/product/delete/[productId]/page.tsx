@@ -4,17 +4,15 @@ import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { Product } from "../../../../_lib/interfaces";
 import InfoProduct from "../../../../_components/product/info";
-import EditProduct from "../../../../_components/product/edit";
 import AdminNavigationBar from "../../../../_components/navigation/adminNavigationBar";
 
-export default function EditProductPage() {
+export default function DeleteProductPage() {
   const params = useParams();
   const router = useRouter();
   const productId = params.productId as string;
 
   const [product, setProduct] = useState<Product | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [typeAction, setTypeAction] = useState<string>("edit");
 
   const [error, setError] = useState<string | null>(null);
 
@@ -43,6 +41,30 @@ export default function EditProductPage() {
       setIsLoading(false);
     }
   }
+
+  const handleSubmit = async (productId) => {
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const res = await fetch(`/api/products/${productId}`, {
+        method: "DELETE",
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        setIsLoading(false);
+        router.push("/products/management");
+      } else {
+        setError(data.error || "Failed to update product");
+      }
+    } catch (error) {
+      setError("Error submitting the form");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   if (isLoading) {
     return (
@@ -80,27 +102,17 @@ export default function EditProductPage() {
       <div className="container mx-auto px-4 py-8">
         <div className="flex justify-between">
           <h1 className="text-3xl font-bold mb-6">
-            Edit Product Page (Private)
+            Delete Product Page (Private)
           </h1>
 
           <button
-            onClick={() => router.push(`/product/info/${product._id}`)}
-            className="bg-blue-700 text-white px-4 py-2 rounded hover:bg-blue-800 transition duration-300 hover:cursor-pointer max-h-[40px] hover:cursor-pointer"
+            onClick={() => handleSubmit(productId)}
+            className="bg-red-700 text-white px-4 py-2 rounded hover:bg-red-800 transition duration-300 hover:cursor-pointer max-h-[40px] hover:cursor-pointer"
           >
-            Info Product
+            Delete Product
           </button>
         </div>
-        {typeAction === "edit" && (
-          <EditProduct
-            product={product}
-            fetchProduct={fetchProduct}
-            setIsLoading={setIsLoading}
-            setError={setError}
-            isLoading={isLoading}
-            setTypeAction={setTypeAction}
-          />
-        )}
-        {typeAction === "info" && <InfoProduct product={product} />}
+        <InfoProduct product={product} />
       </div>
     </>
   );

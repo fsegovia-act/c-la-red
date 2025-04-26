@@ -6,13 +6,11 @@ import { Product } from "../../_lib/interfaces";
 interface ProductListProps {
   products: Product[];
   isLoading: boolean;
-  type: string;
 }
 
 const ProductList: React.FC<ProductListProps> = ({
   products,
   isLoading,
-  type,
 }: ProductListProps) => {
   const router = useRouter();
 
@@ -36,21 +34,18 @@ const ProductList: React.FC<ProductListProps> = ({
                 <th className="py-2 px-4 border-b text-left">Category</th>
                 <th className="py-2 px-4 border-b text-left">Stock</th>
                 <th className="py-2 px-4 border-b text-left">Status</th>
+                <th className="py-2 px-4 border-b text-left">Management</th>
               </tr>
             </thead>
             <tbody>
               {products.map((product) => (
-                <tr
-                  key={product._id}
-                  className="hover:bg-gray-200 hover:cursor-pointer"
-                  onClick={() => {
-                    if (type === "public")
-                      router.push(`/product/details/${product.sku}`);
-                    if (type === "private")
-                      router.push(`/product/info/${product._id}`);
-                  }}
-                >
-                  <td className="py-2 px-4 border-b">{product.name}</td>
+                <tr key={product._id} className="hover:bg-gray-200">
+                  <td
+                    onClick={() => router.push(`/product/info/${product._id}`)}
+                    className="py-2 px-4 border-b hover:cursor-pointer"
+                  >
+                    {product.name}
+                  </td>
                   <td className="py-2 px-4 border-b">{product.sku}</td>
                   <td className="py-2 px-4 border-b">
                     ${product.price.toFixed(2)}
@@ -68,6 +63,32 @@ const ProductList: React.FC<ProductListProps> = ({
                       }`}
                     >
                       {product.isAvailable ? "Available" : "Out of Stock"}
+                    </span>
+                  </td>
+                  <td className="py-2 px-4 border-b">
+                    <span
+                      onClick={() =>
+                        router.push(`/product/info/${product._id}`)
+                      }
+                      className={`px-2 py-1 rounded-full text-xs bg-green-100 text-green-800 hover:cursor-pointer hover:bg-green-300`}
+                    >
+                      {"Info"}
+                    </span>
+                    <span
+                      onClick={() =>
+                        router.push(`/product/edit/${product._id}`)
+                      }
+                      className={`px-2 py-1 rounded-full text-xs bg-blue-100 text-blue-800 hover:cursor-pointer hover:bg-blue-300`}
+                    >
+                      {"Edit"}
+                    </span>
+                    <span
+                      onClick={() =>
+                        router.push(`/product/delete/${product._id}`)
+                      }
+                      className={`px-2 py-1 rounded-full text-xs bg-red-100 text-red-800 hover:cursor-pointer hover:bg-red-300`}
+                    >
+                      {"Delete"}
                     </span>
                   </td>
                 </tr>
