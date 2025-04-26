@@ -2,21 +2,22 @@ import { NextRequest, NextResponse } from "next/server";
 import dbConnect from "../_lib/mongodb";
 import Product from "../_models/Products";
 import { uploadFileToS3 } from "../_lib/aws-s3";
+import { getPaginationParams } from "../_helpers/pagination";
 
 export async function GET(req: NextRequest) {
   await dbConnect();
 
+  const { page, limit, skip } = getPaginationParams(req.url);
+  
   const { searchParams } = new URL(req.url);
-  const page = parseInt(searchParams.get("page") || "1", 10);
-  const limit = parseInt(searchParams.get("limit") || "10", 10);
-  const skip = (page - 1) * limit;
-
   const featured = parseInt(searchParams.get("featured") || "0", 10);
 
   try {
     let filter = {};
     if (featured) filter = {};
+
     const products = await Product.find(filter).skip(skip).limit(limit);
+    
     const total = await Product.countDocuments();
 
     return NextResponse.json({
