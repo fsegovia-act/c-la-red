@@ -37,16 +37,6 @@ const MainNavigationBar = () => {
                   Ofertas
                 </Link>
               </li>
-              <li>
-                <Link href="/sign-in" className="hover:text-blue-700">
-                  Mi Cuenta
-                </Link>
-              </li>
-              <li>
-                <Link href="/cart" className="hover:text-blue-700">
-                  🛒 Carrito
-                </Link>
-              </li>
             </ul>
           </nav>
         </div>
