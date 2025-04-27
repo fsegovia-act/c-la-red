@@ -23,4 +23,5 @@ export interface ProductForm {
 export interface EditProductForm extends ProductForm {
   _id: string,
   imageUrl: string | undefined,
+  file?: any,
 }

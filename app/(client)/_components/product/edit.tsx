@@ -65,18 +65,17 @@ const EditProduct: React.FC<ProductFormProps> = ({
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
-    if (!file) return;
-
     setIsLoading(true);
     setError(null);
 
     try {
-      const productData = {
+      let productData = {
         ...form,
         price: parseFloat(form.price),
         stockQuantity: parseInt(form.stockQuantity, 10),
-        file: file,
       };
+
+      if (file) productData.file = file;
 
       const formData = new FormData();
 
@@ -84,7 +83,7 @@ const EditProduct: React.FC<ProductFormProps> = ({
         formData.append(key, productData[key]);
       });
 
-      formData.append("file", file);
+      if (file) formData.append("file", file);
 
       const res = await fetch(`/api/products/${form._id}`, {
         method: "PUT",
