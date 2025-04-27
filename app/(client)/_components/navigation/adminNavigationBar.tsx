@@ -10,7 +10,7 @@ const AdminNavigationBar = () => {
         <div className="flex justify-between items-center">
           <div className="flex items-center">
             <Link
-              href="/products/management"
+              href="/"
               className="text-2xl font-bold text-blue-900"
             >
               {BUSINESS_NAME} (Admin)
