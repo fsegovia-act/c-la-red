@@ -81,6 +81,8 @@ export async function POST(request) {
           }
         });
 
+        fileName = fileName.replace(" ", "-");
+
         if (!fileName || !extention)
           throw Error("Error, file name was not read");
 

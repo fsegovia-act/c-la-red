@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import dbConnect from "../../_lib/mongodb";
 import Product from "../../_models/Products";
-import { editFileInS3, uploadFileToS3 } from "../../_lib/aws-s3";
+import { deleteFileInS3, uploadFileToS3 } from "../../_lib/aws-s3";
 
 export async function GET(
   request: NextRequest,
@@ -76,6 +76,8 @@ export async function PUT(
           }
         });
 
+        fileName = fileName.replace(" ", "-");
+
         if (!fileName || !extention)
           throw Error("Error, file name was not read");
 
@@ -84,13 +86,12 @@ export async function PUT(
       }
       const fileName = normalizeFileName(file.name);
 
-      let filePath;
-
-      if (body.imageUrl === "/images/products/image-product-default.jpg") {
-        filePath = await uploadFileToS3(buffer, fileName);
-      } else {
-        filePath = await editFileInS3(buffer, body.imageUrl);
+      // if It doesn't defatul image is an update
+      if (body.imageUrl !== "/images/products/image-product-default.jpg") {
+        await deleteFileInS3(body.imageUrl);
       }
+
+      const filePath = await uploadFileToS3(buffer, fileName);
       body.imageUrl = filePath;
     }
 
