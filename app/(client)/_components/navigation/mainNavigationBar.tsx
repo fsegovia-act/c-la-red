@@ -37,6 +37,11 @@ const MainNavigationBar = () => {
                   Ofertas
                 </Link>
               </li>
+              <li>
+                <Link href="/sign-in" className="hover:text-blue-700">
+                  Sign In
+                </Link>
+              </li>
             </ul>
           </nav>
         </div>

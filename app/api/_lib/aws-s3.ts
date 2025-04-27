@@ -1,4 +1,4 @@
-import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import { S3Client, PutObjectCommand, DeleteObjectCommand } from "@aws-sdk/client-s3";
 
 const S3_ACCESS_KEY_ID = process.env.S3_ACCESS_KEY_ID;
 const S3_SECRET_ACCESS_KEY = process.env.S3_SECRET_ACCESS_KEY;
@@ -37,17 +37,13 @@ export async function uploadFileToS3(file, fileName) {
   return `/images/products/${fileName}`;
 }
 
-export async function editFileInS3(file, filePath) {
-  const fileBuffer = file;
+export async function deleteFileInS3(filePath) {
   const params = {
     Bucket: S3_BUCKET_NAME,
     Key: filePath,
-    Body: fileBuffer,
-    ContentType: "image/jpg",
   };
 
-  const command = new PutObjectCommand(params);
+  const command = new DeleteObjectCommand(params);
   await s3Client.send(command);
-
   return filePath;
 }

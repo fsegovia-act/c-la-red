@@ -65,18 +65,17 @@ const EditProduct: React.FC<ProductFormProps> = ({
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
-    if (!file) return;
-
     setIsLoading(true);
     setError(null);
 
     try {
-      const productData = {
+      let productData = {
         ...form,
         price: parseFloat(form.price),
         stockQuantity: parseInt(form.stockQuantity, 10),
-        file: file,
       };
+
+      if (file) productData.file = file;
 
       const formData = new FormData();
 
@@ -84,7 +83,7 @@ const EditProduct: React.FC<ProductFormProps> = ({
         formData.append(key, productData[key]);
       });
 
-      formData.append("file", file);
+      if (file) formData.append("file", file);
 
       const res = await fetch(`/api/products/${form._id}`, {
         method: "PUT",
@@ -275,7 +274,7 @@ const EditProduct: React.FC<ProductFormProps> = ({
             disabled={isLoading}
             className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50"
           >
-            {isLoading ? "Saving..." : "Edit Product"}
+            {isLoading ? "Saving..." : "Save changes"}
           </button>
         </div>
       </form>
