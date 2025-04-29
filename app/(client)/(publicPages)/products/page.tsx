@@ -1,12 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { NextPage } from "next";
 import { Product } from "../../_lib/interfaces";
 import ProductGrid from "../../_components/product/productGrid";
 import MainNavigationBar from "../../_components/navigation/mainNavigationBar";
 import MainFooter from "../../_components/footer/mainFooter";
 import { useSearchParams} from "next/navigation";
+import Loader from "../../_components/loader/Loader";
 
 const ProductsPage: NextPage = () => {
   const searchParams = useSearchParams();
@@ -42,25 +43,29 @@ const ProductsPage: NextPage = () => {
   };
 
   return (
-    <div className="flex flex-col justify-between min-h-screen">
-      <MainNavigationBar />
+    <>
+      <Suspense fallback={<Loader />}>
+        <div className="flex flex-col justify-between min-h-screen">
+          <MainNavigationBar />
 
-      <div className="container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold mb-6">
-          Product Catalog Page (public)
-        </h1>
+          <div className="container mx-auto px-4 py-8">
+            <h1 className="text-3xl font-bold mb-6">
+              Product Catalog Page (public)
+            </h1>
 
-        {error && (
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-            {error}
+            {error && (
+              <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+                {error}
+              </div>
+            )}
+
+            <ProductGrid products={products} />
           </div>
-        )}
 
-        <ProductGrid products={products} />
-      </div>
-
-      <MainFooter />
-    </div>
+          <MainFooter />
+        </div>
+      </Suspense>
+    </>
   );
 };
 
