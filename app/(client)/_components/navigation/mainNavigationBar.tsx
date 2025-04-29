@@ -27,15 +27,15 @@ const MainNavigationBar = () => {
           <div className="flex-1 mx-10">
             <div className="relative">
               <input
-                type="text"
-                placeholder="Buscar productos, marcas y más..."
-                className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-blue-500"
                 onChange={(e) => onHandleChange(e)}
                 onKeyDown={(e) => {
                   if (e.key === "Enter")
                     router.push(`/products?search=${search}`);
                 }}
                 value={search}
+                type="text"
+                placeholder="Buscar productos, marcas y más..."
+                className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-blue-500"
               />
               <button
                 onClick={() => router.push(`/products?search=${search}`)}
