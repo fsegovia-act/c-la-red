@@ -8,16 +8,24 @@ export async function GET(req: NextRequest) {
   await dbConnect();
 
   const { page, limit, skip } = getPaginationParams(req.url);
-  
+
   const { searchParams } = new URL(req.url);
   const featured = parseInt(searchParams.get("featured") || "0", 10);
+  const search = searchParams.get("search") || "";
 
   try {
     let filter = {};
     if (featured) filter = {};
+    if (search)
+      filter = {
+        $or: [
+          { name: { $regex: search, $options: "i" } },
+          { sku: { $regex: search, $options: "i" } },
+        ],
+      };
 
     const products = await Product.find(filter).skip(skip).limit(limit);
-    
+
     const total = await Product.countDocuments();
 
     return NextResponse.json({

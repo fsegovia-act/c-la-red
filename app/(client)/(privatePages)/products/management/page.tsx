@@ -1,25 +1,31 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { NextPage } from "next";
 import { Product } from "../../../_lib/interfaces";
 import ProductList from "../../../_components/product/list";
 import AdminNavigationBar from "../../../_components/navigation/adminNavigationBar";
+import { useSearchParams } from "next/navigation";
+import Loader from "../../../_components/loader/Loader";
 
-const ProductManagementPage: NextPage = () => {
+const ProductManagement: NextPage = () => {
+  const searchParams = useSearchParams();
+  const search = searchParams.get("search");
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     fetchProducts();
-  }, []);
+  }, [search]);
 
   const fetchProducts = async () => {
     setIsLoading(true);
     setError(null);
     try {
-      const res = await fetch("/api/products");
+      const res = search
+        ? await fetch(`/api/products?search=${search}`)
+        : await fetch("/api/products");
       const data = await res.json();
 
       if (data.success) {
@@ -50,6 +56,14 @@ const ProductManagementPage: NextPage = () => {
         <ProductList products={products} isLoading={isLoading} />
       </div>
     </>
+  );
+};
+
+const ProductManagementPage: NextPage = () => {
+  return (
+    <Suspense fallback={<Loader />}>
+      <ProductManagement />
+    </Suspense>
   );
 };
 
