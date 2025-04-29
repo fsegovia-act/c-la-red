@@ -18,7 +18,10 @@ export async function GET(req: NextRequest) {
     if (featured) filter = {};
     if (search)
       filter = {
-        $or: [{ name: { $regex: search, $options: "i" } }],
+        $or: [
+          { name: { $regex: search, $options: "i" } },
+          { sku: { $regex: search, $options: "i" } },
+        ],
       };
 
     const products = await Product.find(filter).skip(skip).limit(limit);
