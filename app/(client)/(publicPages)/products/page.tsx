@@ -6,21 +6,27 @@ import { Product } from "../../_lib/interfaces";
 import ProductGrid from "../../_components/product/productGrid";
 import MainNavigationBar from "../../_components/navigation/mainNavigationBar";
 import MainFooter from "../../_components/footer/mainFooter";
+import { useSearchParams} from "next/navigation";
 
 const ProductsPage: NextPage = () => {
+  const searchParams = useSearchParams();
+  const search = searchParams.get("search");
+
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     fetchProducts();
-  }, []);
+  }, [search]);
 
   const fetchProducts = async () => {
     setIsLoading(true);
     setError(null);
     try {
-      const res = await fetch("/api/products");
+      const res = search
+        ? await fetch(`/api/products?search=${search}`)
+        : await fetch("/api/products");
       const data = await res.json();
 
       if (data.success) {

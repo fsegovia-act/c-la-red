@@ -2,8 +2,19 @@
 
 import Link from "next/link";
 import { BUSINESS_NAME } from "../../_lib/constant";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 const MainNavigationBar = () => {
+  const router = useRouter();
+
+  const [search, setSearch] = useState<string>("");
+
+  const onHandleChange = (e) => {
+    let value = e.target.value;
+    setSearch(value);
+  };
+
   return (
     <header className="bg-yellow-400 shadow-md">
       <div className="container mx-auto px-4 py-3">
@@ -19,8 +30,17 @@ const MainNavigationBar = () => {
                 type="text"
                 placeholder="Buscar productos, marcas y más..."
                 className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-blue-500"
+                onChange={(e) => onHandleChange(e)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter")
+                    router.push(`/products?search=${search}`);
+                }}
+                value={search}
               />
-              <button className="absolute right-2 top-2 text-gray-500">
+              <button
+                onClick={() => router.push(`/products?search=${search}`)}
+                className="absolute right-2 top-2 text-gray-500"
+              >
                 🔍
               </button>
             </div>
