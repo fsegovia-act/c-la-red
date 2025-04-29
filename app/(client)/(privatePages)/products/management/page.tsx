@@ -8,7 +8,7 @@ import AdminNavigationBar from "../../../_components/navigation/adminNavigationB
 import { useSearchParams } from "next/navigation";
 import Loader from "../../../_components/loader/Loader";
 
-const ProductManagementPage: NextPage = () => {
+const ProductManagement: NextPage = () => {
   const searchParams = useSearchParams();
   const search = searchParams.get("search");
   const [products, setProducts] = useState<Product[]>([]);
@@ -42,22 +42,28 @@ const ProductManagementPage: NextPage = () => {
 
   return (
     <>
-      <Suspense fallback={<Loader />}>
-        <AdminNavigationBar />
+      <AdminNavigationBar />
 
-        <div className="container mx-auto px-4 py-8">
-          <h1 className="text-3xl font-bold mb-6">
-            Products Management Page (private)
-          </h1>
-          {error && (
-            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-              {error}
-            </div>
-          )}
-          <ProductList products={products} isLoading={isLoading} />
-        </div>
-      </Suspense>
+      <div className="container mx-auto px-4 py-8">
+        <h1 className="text-3xl font-bold mb-6">
+          Products Management Page (private)
+        </h1>
+        {error && (
+          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+            {error}
+          </div>
+        )}
+        <ProductList products={products} isLoading={isLoading} />
+      </div>
     </>
+  );
+};
+
+const ProductManagementPage: NextPage = () => {
+  return (
+    <Suspense fallback={<Loader />}>
+      <ProductManagement />
+    </Suspense>
   );
 };
 
