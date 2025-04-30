@@ -5,7 +5,8 @@ import { useParams, useRouter } from "next/navigation";
 import { Product } from "../../../../_lib/interfaces";
 import InfoProduct from "../../../../_components/product/info";
 import EditProduct from "../../../../_components/product/edit";
-import AdminNavigationBar from "../../../../_components/navigation/adminNavigationBar";
+import MainNavigationBar from "../../../../_components/navigation/mainNavigationBar";
+import { PRIVATE } from "../../../../_lib/constant";
 
 export default function EditProductPage() {
   const params = useParams();
@@ -75,7 +76,7 @@ export default function EditProductPage() {
 
   return (
     <>
-      <AdminNavigationBar />
+      <MainNavigationBar type={PRIVATE} />
 
       <div className="container mx-auto px-4 py-8">
         <div className="flex justify-between">
