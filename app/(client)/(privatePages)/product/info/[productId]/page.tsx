@@ -3,7 +3,8 @@ import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { Product } from "../../../../_lib/interfaces";
 import InfoProduct from "../../../../_components/product/info";
-import AdminNavigationBar from "../../../../_components/navigation/adminNavigationBar";
+import { PRIVATE } from "../../../../_lib/constant";
+import MainNavigationBar from "../../../../_components/navigation/mainNavigationBar";
 
 export default function ProductDetailsPage() {
   const params = useParams();
@@ -71,7 +72,8 @@ export default function ProductDetailsPage() {
 
   return (
     <>
-      <AdminNavigationBar />
+      <MainNavigationBar type={PRIVATE} />
+
       <div className="container mx-auto px-4 py-8">
         <div className="flex justify-between">
           <h1 className="text-3xl font-bold mb-6">

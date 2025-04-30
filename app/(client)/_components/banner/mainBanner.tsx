@@ -2,6 +2,9 @@
 
 import { useRouter } from "next/navigation";
 import { BUSINESS_NAME } from "../../_lib/constant";
+import Image from "next/image";
+
+const NEXT_PUBLIC_S3_BASE_URL = process.env.NEXT_PUBLIC_S3_BASE_URL;
 
 const MainBanner = () => {
   const router = useRouter();
@@ -33,9 +36,15 @@ const MainBanner = () => {
               </button>
             </div>
           </div>
-          <div className="md:w-1/2 flex justify-center">
+          <div className="md:w-1/2 flex justify-center w-full">
             <div className="w-full max-w-md h-64 bg-gray-300 rounded-lg flex items-center justify-center">
-              <span className="text-gray-600 text-lg">Banner Image</span>
+              <div className="relative h-[100%] w-[100%] overflow-hidden">
+                <Image
+                  src={`${NEXT_PUBLIC_S3_BASE_URL}/images/business/tienda-online-banner.jpg`}
+                  alt={"tienda-online-banner"}
+                  fill
+                />
+              </div>
             </div>
           </div>
         </div>

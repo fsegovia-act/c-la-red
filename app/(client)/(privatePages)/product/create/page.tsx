@@ -5,7 +5,8 @@ import { NextPage } from "next";
 import { Product } from "../../../_lib/interfaces";
 import ProductList from "../../../_components/product/list";
 import CreateProduct from "../../../_components/product/create";
-import AdminNavigationBar from "../../../_components/navigation/adminNavigationBar";
+import MainNavigationBar from "../../../_components/navigation/mainNavigationBar";
+import { PRIVATE } from "../../../_lib/constant";
 
 const CreateProductPage: NextPage = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -37,7 +38,7 @@ const CreateProductPage: NextPage = () => {
 
   return (
     <>
-      <AdminNavigationBar />
+      <MainNavigationBar type={PRIVATE} />
       <div className="container mx-auto px-4 py-8">
         <h1 className="text-3xl font-bold mb-6">
           Create Product Page (Private)
