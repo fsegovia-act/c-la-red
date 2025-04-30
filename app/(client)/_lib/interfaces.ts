@@ -25,3 +25,14 @@ export interface EditProductForm extends ProductForm {
   imageUrl: string | undefined,
   file?: any,
 }
+
+export interface NavItem {
+  label: string;
+  href: string;
+}
+
+export interface NavbarProps {
+  navItems: NavItem[];
+  variant?: "slide-right" | "slide-down" | "fade";
+  colorScheme?: "light" | "dark";
+}

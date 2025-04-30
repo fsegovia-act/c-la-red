@@ -3,24 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-
-interface SubNavItem {
-  label: string;
-  href: string;
-}
-
-interface NavItem {
-  label: string;
-  href: string;
-  subItems?: SubNavItem[];
-}
-
-interface NavbarProps {
-  navItems: NavItem[];
-  logo?: React.ReactNode;
-  variant?: "slide-right" | "slide-down" | "fade";
-  colorScheme?: "light" | "dark";
-}
+import { NavbarProps } from "../../../_lib/interfaces";
 
 export default function MobileMenu({
   navItems,
@@ -100,47 +83,49 @@ export default function MobileMenu({
   };
 
   return (
-    <div ref={navRef}>
-      <div className="flex items-center lg:hidden min-w-[20px] max-w-[20px] pr-[30px]">
-        <button
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className={`inline-flex items-center justify-center p-2 rounded-md`}
-          aria-expanded={isMenuOpen}
-        >
-          <span className="sr-only">Open main menu</span>
-          {isMenuOpen ? (
-            <p className="text-[30px]">x</p>
-          ) : (
-            <p className="text-[30px]">+</p>
-          )}
-        </button>
-      </div>
-
-      <nav className={colors.navbar}>
-        <div
-          className={`lg:hidden ${menuAnimationClasses[variant]} ${menuTransformClasses[variant]} ${colors.mobileMenu} shadow-xl z-50`}
-        >
-          <div className="px-2 pt-2 pb-3 space-y-1">
-            {navItems.map((item) => (
-              <div key={item.href}>
-                {
-                  <Link
-                    href={item.href}
-                    className={`block px-3 py-2 rounded-md text-base font-medium ${
-                      colors.mobileMenuLink
-                    } ${colors.mobileMenuLinkHover} ${
-                      isActive(item.href) ? colors.activeText : ""
-                    }`}
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    {item.label}
-                  </Link>
-                }
-              </div>
-            ))}
-          </div>
+    <div className="flex md:hidden">
+      <div ref={navRef}>
+        <div className="flex items-center lg:hidden min-w-[20px] max-w-[20px] pr-[30px]">
+          <button
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className={`inline-flex items-center justify-center p-2 rounded-md`}
+            aria-expanded={isMenuOpen}
+          >
+            <span className="sr-only">Open main menu</span>
+            {isMenuOpen ? (
+              <p className="text-[30px]">x</p>
+            ) : (
+              <p className="text-[30px]">+</p>
+            )}
+          </button>
         </div>
-      </nav>
+
+        <nav className={colors.navbar}>
+          <div
+            className={`lg:hidden ${menuAnimationClasses[variant]} ${menuTransformClasses[variant]} ${colors.mobileMenu} shadow-xl z-50`}
+          >
+            <div className="px-2 pt-2 pb-3 space-y-1">
+              {navItems.map((item) => (
+                <div key={item.href}>
+                  {
+                    <Link
+                      href={item.href}
+                      className={`block px-3 py-2 rounded-md text-base font-medium ${
+                        colors.mobileMenuLink
+                      } ${colors.mobileMenuLinkHover} ${
+                        isActive(item.href) ? colors.activeText : ""
+                      }`}
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      {item.label}
+                    </Link>
+                  }
+                </div>
+              ))}
+            </div>
+          </div>
+        </nav>
+      </div>
     </div>
   );
 }

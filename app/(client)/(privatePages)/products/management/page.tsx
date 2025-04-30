@@ -4,9 +4,10 @@ import { useState, useEffect, Suspense } from "react";
 import { NextPage } from "next";
 import { Product } from "../../../_lib/interfaces";
 import ProductList from "../../../_components/product/list";
-import AdminNavigationBar from "../../../_components/navigation/adminNavigationBar";
 import { useSearchParams } from "next/navigation";
 import Loader from "../../../_components/loader/Loader";
+import { PRIVATE } from "../../../_lib/constant";
+import MainNavigationBar from "../../../_components/navigation/mainNavigationBar";
 
 const ProductManagement: NextPage = () => {
   const searchParams = useSearchParams();
@@ -42,7 +43,7 @@ const ProductManagement: NextPage = () => {
 
   return (
     <>
-      <AdminNavigationBar />
+      <MainNavigationBar type={PRIVATE} />
 
       <div className="container mx-auto px-4 py-8">
         <h1 className="text-3xl font-bold mb-6">

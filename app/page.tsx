@@ -10,7 +10,7 @@ import SpecialOffersBanner from "./(client)/_components/banner/specialOffersBann
 import AdditionalInformationBanner from "./(client)/_components/banner/additionalInformationBanner";
 import NewslatterBanner from "./(client)/_components/banner/newslatterBanner";
 import MainFooter from "./(client)/_components/footer/mainFooter";
-import { BUSINESS_NAME } from "./(client)/_lib/constant";
+import { BUSINESS_NAME, PUBLIC } from "./(client)/_lib/constant";
 
 const HomePage = () => {
   const [isClient, setIsClient] = useState(false);
@@ -34,7 +34,7 @@ const HomePage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <MainNavigationBar />
+      <MainNavigationBar type={PUBLIC} />
 
       <main>
         <MainBanner />
