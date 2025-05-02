@@ -38,6 +38,7 @@ const EditProduct: React.FC<ProductFormProps> = ({
     category: product.category,
     stockQuantity: product.stockQuantity.toString(),
     imageUrl: product.imageUrl,
+    isAvailable: product.isAvailable
   });
   const [file, setFile] = useState<File | null>(null);
   const [urlFile, setUrlFile] = useState<string>(
@@ -73,6 +74,7 @@ const EditProduct: React.FC<ProductFormProps> = ({
         ...form,
         price: parseFloat(form.price),
         stockQuantity: parseInt(form.stockQuantity, 10),
+        isAvailable: !!parseInt(form.stockQuantity, 10),
       };
 
       if (file) productData.file = file;
@@ -103,6 +105,7 @@ const EditProduct: React.FC<ProductFormProps> = ({
           category: "",
           stockQuantity: "",
           imageUrl: "",
+          isAvailable: false,
         });
         setTypeAction("info");
       } else {

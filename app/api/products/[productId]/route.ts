@@ -48,6 +48,7 @@ export async function PUT(
       stockQuantity: formData.get("stockQuantity"),
       price: formData.get("price"),
       imageUrl: formData.get("imageUrl"),
+      isAvailable: formData.get("isAvailable"),
     };
 
     if (file) {
