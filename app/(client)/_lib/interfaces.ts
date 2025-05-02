@@ -21,9 +21,10 @@ export interface ProductForm {
 }
 
 export interface EditProductForm extends ProductForm {
-  _id: string,
-  imageUrl: string | undefined,
-  file?: any,
+  _id: string;
+  imageUrl: string | undefined;
+  file?: any;
+  isAvailable: boolean;
 }
 
 export interface NavItem {
