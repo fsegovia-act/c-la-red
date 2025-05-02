@@ -21,7 +21,7 @@ const UploadForm = () => {
     const formData = new FormData();
     formData.append("file", file);
     try {
-      const response = await fetch("/api/s3-upload", {
+      const response = await fetch("/api/services/s3-upload", {
         method: "POST",
         body: formData,
       });
