@@ -31,3 +31,41 @@ export const PRIVATE_MENU_ITEMS = [
 ];
 
 export const defaultImageUrl = "/images/products/image-product-default.jpg";
+
+export const CATEGORIES = [
+  {
+    id: 1,
+    name: "Tecnología",
+    icon: "🖥️",
+    slug: "electronics",
+    url: "/category/tech",
+  },
+  {
+    id: 2,
+    name: "Accesorios",
+    icon: "📱",
+    slug: "tech",
+    url: "/category/accessories",
+  },
+  {
+    id: 3,
+    name: "Mascotas",
+    icon: "🐕",
+    slug: "pets",
+    url: "/category/pets",
+  },
+  {
+    id: 4,
+    name: "Ropa",
+    icon: "👕",
+    slug: "clothing",
+    url: "/category/clothing",
+  },
+  {
+    id: 5,
+    name: "Reparación",
+    icon: "🛠️",
+    slug: "home",
+    url: "/category/service",
+  },
+];

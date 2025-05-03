@@ -1,14 +1,7 @@
 "use client";
 
 import Link from "next/link";
-
-const CATEGORIES = [
-  { id: 1, name: "Electrónicos", icon: "🖥️", slug: "electronics" },
-  { id: 2, name: "Hogar", icon: "🏠", slug: "home" },
-  { id: 3, name: "Tecnología", icon: "📱", slug: "tech" },
-  { id: 4, name: "Accesorios", icon: "⌚", slug: "accessories" },
-  { id: 5, name: "Ropa", icon: "👕", slug: "clothing" },
-];
+import { CATEGORIES } from "../../_lib/constant";
 
 const CategoryBanner = () => {
   return (
