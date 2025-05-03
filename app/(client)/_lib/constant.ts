@@ -29,3 +29,5 @@ export const PRIVATE_MENU_ITEMS = [
   },
   { label: "Sign Out", href: "/sign-out" },
 ];
+
+export const defaultImageUrl = "/images/products/image-product-default.jpg";

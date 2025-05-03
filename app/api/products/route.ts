@@ -3,6 +3,7 @@ import dbConnect from "../_lib/mongodb";
 import Product from "../_models/Products";
 import { uploadFileToS3 } from "../_lib/aws-s3";
 import { getPaginationParams } from "../_helpers/pagination";
+import { defaultImageUrl } from "../../(client)/_lib/constant";
 
 export async function GET(req: NextRequest) {
   await dbConnect();
@@ -60,7 +61,7 @@ export async function POST(request) {
       category: formData.get("category"),
       stockQuantity: formData.get("stockQuantity"),
       price: formData.get("price"),
-      imageUrl: "/images/products/image-product-default.jpg",
+      imageUrl: defaultImageUrl,
     };
 
     if (file) {
