@@ -26,7 +26,6 @@ const UploadForm = () => {
         body: formData,
       });
       const data = await response.json();
-      console.log({ data });
 
       setUploading(false);
     } catch (error) {
