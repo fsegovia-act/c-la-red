@@ -3,6 +3,7 @@ import dbConnect from "../../_lib/mongodb";
 import Product from "../../_models/Products";
 import { deleteFileInS3, uploadFileToS3 } from "../../_lib/aws-s3";
 import { defaultImageUrl } from "../../../(client)/_lib/constant";
+import { validateCategory } from "../../_helpers/pagination";
 
 export async function GET(
   request: NextRequest,
@@ -51,6 +52,8 @@ export async function PUT(
       imageUrl: formData.get("imageUrl"),
       isAvailable: formData.get("isAvailable"),
     };
+
+    validateCategory(body.category);
 
     if (file) {
       const buffer = Buffer.from(await file.arrayBuffer());
@@ -112,7 +115,7 @@ export async function PUT(
     return NextResponse.json({ success: true, data: product });
   } catch (error) {
     return NextResponse.json(
-      { success: false, error: "Error updating product" },
+      { success: false, error: error.message },
       { status: 400 }
     );
   }
