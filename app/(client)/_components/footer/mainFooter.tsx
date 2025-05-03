@@ -1,15 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { BUSINESS_ADDRESS, BUSINESS_EMAIL, BUSINESS_NAME, BUSINESS_PHONE_NUMBER } from "../../_lib/constant";
-
-const CATEGORIES = [
-  { id: 1, name: "Electrónicos", icon: "🖥️", url: "/category/electronics" },
-  { id: 2, name: "Hogar", icon: "🏠", url: "/category/home" },
-  { id: 3, name: "Tecnología", icon: "📱", url: "/category/tech" },
-  { id: 4, name: "Accesorios", icon: "⌚", url: "/category/accessories" },
-  { id: 5, name: "Ropa", icon: "👕", url: "/category/clothing" },
-];
+import { BUSINESS_ADDRESS, BUSINESS_EMAIL, BUSINESS_NAME, BUSINESS_PHONE_NUMBER, CATEGORIES } from "../../_lib/constant";
 
 const MainFooter = () => {
   return (

@@ -12,6 +12,7 @@ import {
 } from "next-share";
 import { Product } from "../../_lib/interfaces";
 import { BUSINESS_PHONE_NUMBER } from "../../_lib/constant";
+import { formatPrice } from "../../_lib/helpers";
 
 interface ProductProps {
   product: Product;
@@ -49,7 +50,7 @@ const InfoProduct: React.FC<ProductProps> = ({ product }: ProductProps) => {
         <h1 className="text-3xl font-bold mb-2">{product.name}</h1>
 
         <div className="text-xl font-semibold text-blue-600 mb-4">
-          ${product.price.toFixed(2)}
+          ${formatPrice(product.price)}
         </div>
 
         <div className="mb-6">

@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { Product } from "../../_lib/interfaces";
+import { formatPrice } from "../../_lib/helpers";
 
 interface ProductListProps {
   products: Product[];
@@ -48,7 +49,7 @@ const ProductList: React.FC<ProductListProps> = ({
                   </td>
                   <td className="py-2 px-4 border-b">{product.sku}</td>
                   <td className="py-2 px-4 border-b">
-                    ${product.price.toFixed(2)}
+                    ${formatPrice(product.price)}
                   </td>
                   <td className="py-2 px-4 border-b">{product.category}</td>
                   <td className="py-2 px-4 border-b">

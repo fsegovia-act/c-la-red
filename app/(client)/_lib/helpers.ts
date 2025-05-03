@@ -1,8 +1,26 @@
-export const formatPrice = (price: number): string => {
-  return new Intl.NumberFormat("es-MX", {
-    style: "currency",
-    currency: "MXN",
-  }).format(price);
+export const formatPrice = (
+  price: number,
+  decimalPlaces: number = 2,
+  decimalSeparator: string = ",",
+  thousandsSeparator: string = "."
+): string => {
+  if (isNaN(price) || price === null || price === undefined) {
+    return "0" + decimalSeparator + "0".repeat(decimalPlaces);
+  }
+  
+  const fixedPrice = price.toFixed(decimalPlaces);
+  const [integerPart, decimalPart] = fixedPrice.split(".");
+
+  const formattedIntegerPart = integerPart.replace(
+    /\B(?=(\d{3})+(?!\d))/g,
+    thousandsSeparator
+  );
+
+  return (
+    formattedIntegerPart +
+    decimalSeparator +
+    (decimalPart || "0".repeat(decimalPlaces))
+  );
 };
 
 export const base64ToFile = (base64String: string, fileName?: string): File => {
