@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import dbConnect from "../../_lib/mongodb";
 import Product from "../../_models/Products";
 import { deleteFileInS3, uploadFileToS3 } from "../../_lib/aws-s3";
+import { defaultImageUrl } from "../../../(client)/_lib/constant";
 
 export async function GET(
   request: NextRequest,
@@ -88,7 +89,7 @@ export async function PUT(
       const fileName = normalizeFileName(file.name);
 
       // if It doesn't defatul image is an update
-      if (body.imageUrl !== "/images/products/image-product-default.jpg") {
+      if (body.imageUrl !== defaultImageUrl) {
         await deleteFileInS3(body.imageUrl);
       }
 
