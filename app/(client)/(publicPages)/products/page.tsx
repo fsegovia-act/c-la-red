@@ -27,8 +27,8 @@ const Products: NextPage = () => {
     setError(null);
     try {
       const res = search
-        ? await fetch(`/api/products?search=${search}`)
-        : await fetch("/api/products");
+        ? await fetch(`/api/products?search=${search}&available=true`)
+        : await fetch("/api/products?available=true");
       const data = await res.json();
 
       if (data.success) {

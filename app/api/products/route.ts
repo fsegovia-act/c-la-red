@@ -14,18 +14,19 @@ export async function GET(req: NextRequest) {
   const featured = parseInt(searchParams.get("featured") || "0", 10);
   const search = searchParams.get("search") || "";
   const category = searchParams.get("category") || "";
+  const available = searchParams.get("available") || "";
 
   try {
     let filter: any = {};
     let sort: any = {};
 
     if (featured) filter = { ...filter };
+    if (available) filter = { ...filter, isAvailable: true };
 
     if (category) {
       filter = {
         ...filter,
         category: category,
-        isAvailable: true,
       };
     }
 
