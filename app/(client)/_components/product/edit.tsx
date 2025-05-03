@@ -93,6 +93,7 @@ const EditProduct: React.FC<ProductFormProps> = ({
           imageUrl: "",
           isAvailable: false,
         });
+        setFile(null);
         setTypeAction("info");
       } else {
         setError(data.error || "Failed to update product");

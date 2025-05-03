@@ -32,6 +32,7 @@ export default function BackgroundRemover({
       reader.readAsDataURL(file);
       setFileName(file.name);
       setDefaultImage(false);
+      setFile(file);
     }
   };
 
@@ -81,7 +82,7 @@ export default function BackgroundRemover({
           src={sourceImage}
           alt={file ? file.name : "image-product-default"}
           fill
-          className="object-cover"
+          className="object-contain"
         />
       </div>
 

@@ -83,6 +83,8 @@ const CreateProduct: React.FC<ProductFormProps> = ({
           category: "",
           stockQuantity: "",
         });
+        setFile(null);
+        window.location.reload();
       } else {
         setError(data.error || "Failed to create product");
       }
