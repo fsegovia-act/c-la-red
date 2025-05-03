@@ -37,14 +37,14 @@ export const CATEGORIES = [
     id: 1,
     name: "Tecnología",
     icon: "🖥️",
-    slug: "electronics",
+    slug: "tech",
     url: "/category/tech",
   },
   {
     id: 2,
     name: "Accesorios",
     icon: "📱",
-    slug: "tech",
+    slug: "accessories",
     url: "/category/accessories",
   },
   {
@@ -65,7 +65,7 @@ export const CATEGORIES = [
     id: 5,
     name: "Reparación",
     icon: "🛠️",
-    slug: "home",
+    slug: "service",
     url: "/category/service",
   },
 ];
