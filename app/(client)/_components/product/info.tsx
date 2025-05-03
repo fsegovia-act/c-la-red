@@ -36,7 +36,7 @@ const InfoProduct: React.FC<ProductProps> = ({ product }: ProductProps) => {
               src={`${NEXT_PUBLIC_S3_BASE_URL}${product.imageUrl}`}
               alt={product.name}
               fill
-              className="object-cover"
+              className="object-contain"
             />
           </div>
         ) : (
