@@ -1,6 +1,7 @@
 import { Product } from "../../_lib/interfaces";
 import Image from "next/image";
 import Link from "next/link";
+import { formatPrice } from "../../_lib/helpers";
 
 interface ProductCardProps {
   product: Product;
@@ -39,7 +40,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         </p>
 
         <div className="flex justify-between items-center">
-          <span className="text-lg font-bold">${product.price.toFixed(2)}</span>
+          <span className="text-lg font-bold">${formatPrice(product.price)}</span>
           <Link
             href={`/product/details/${product.sku}`}
             className={`px-4 py-2 rounded-md ${
