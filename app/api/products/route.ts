@@ -13,12 +13,22 @@ export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const featured = parseInt(searchParams.get("featured") || "0", 10);
   const search = searchParams.get("search") || "";
+  const category = searchParams.get("category") || "";
 
   try {
-    let filter = {};
-    if (featured) filter = {};
+    let filter: any = {};
+
+    if (featured) filter = { ...filter };
+
+    if (category) filter = {
+      ...filter,
+      category: category,
+      isAvailable: true,
+    };
+
     if (search)
       filter = {
+        ...filter,
         $or: [
           { name: { $regex: search, $options: "i" } },
           { sku: { $regex: search, $options: "i" } },
