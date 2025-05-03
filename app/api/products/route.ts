@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import dbConnect from "../_lib/mongodb";
 import Product from "../_models/Products";
 import { uploadFileToS3 } from "../_lib/aws-s3";
-import { getPaginationParams } from "../_helpers/pagination";
+import { getPaginationParams, validateCategory } from "../_helpers/pagination";
 import { defaultImageUrl } from "../../(client)/_lib/constant";
 
 export async function GET(req: NextRequest) {
@@ -13,19 +13,39 @@ export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const featured = parseInt(searchParams.get("featured") || "0", 10);
   const search = searchParams.get("search") || "";
+  const category = searchParams.get("category") || "";
+  const available = searchParams.get("available") || "";
 
   try {
-    let filter = {};
-    if (featured) filter = {};
-    if (search)
+    let filter: any = {};
+    let sort: any = {};
+
+    if (featured) filter = { ...filter };
+    if (available) filter = { ...filter, isAvailable: true };
+
+    if (category) {
       filter = {
+        ...filter,
+        category: category,
+      };
+    }
+
+    if (search) {
+      filter = {
+        ...filter,
         $or: [
           { name: { $regex: search, $options: "i" } },
           { sku: { $regex: search, $options: "i" } },
         ],
       };
+    } else {
+      sort = { createdAt: "desc" };
+    }
 
-    const products = await Product.find(filter).skip(skip).limit(limit);
+    const products = await Product.find(filter)
+      .sort(sort)
+      .skip(skip)
+      .limit(limit);
 
     const total = await Product.countDocuments();
 
@@ -63,6 +83,8 @@ export async function POST(request) {
       price: formData.get("price"),
       imageUrl: defaultImageUrl,
     };
+
+    validateCategory(body.category);
 
     if (file) {
       const buffer = Buffer.from(await file.arrayBuffer());
@@ -108,7 +130,7 @@ export async function POST(request) {
     return NextResponse.json({ success: true, data: product }, { status: 201 });
   } catch (error) {
     return NextResponse.json(
-      { success: false, error: "Error creating product" },
+      { success: false, error: error.message },
       { status: 400 }
     );
   }
