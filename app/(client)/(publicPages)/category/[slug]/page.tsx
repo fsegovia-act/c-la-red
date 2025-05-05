@@ -25,7 +25,7 @@ const CategoryPage: NextPage = () => {
     setIsLoading(true);
     setError(null);
     try {
-      const res = await fetch(`/api/products?category=${slug}`);
+      const res = await fetch(`/api/products?category=${slug}&available=true`);
       const data = await res.json();
 
       if (data.success) {
@@ -47,7 +47,7 @@ const CategoryPage: NextPage = () => {
 
         <div className="container mx-auto px-4 py-8">
           <h1 className="text-3xl font-bold mb-6">
-            Category {slug} Page (public)
+            Category: {slug}
           </h1>
 
           {error && (

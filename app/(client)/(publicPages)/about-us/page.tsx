@@ -10,7 +10,7 @@ export default function AboutUsPage() {
       <MainNavigationBar type={PUBLIC} />
 
       <div className="container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold mb-6">About Us Page (public)</h1>
+        <h1 className="text-3xl font-bold mb-6">About Us</h1>
       </div>
 
       <MainFooter />
