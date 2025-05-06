@@ -2,16 +2,21 @@ import { Product } from "../../_lib/interfaces";
 import Image from "next/image";
 import Link from "next/link";
 import { formatPrice } from "../../_lib/helpers";
+import { RefObject } from "react";
 
 interface ProductCardProps {
   product: Product;
+  ref?: RefObject<HTMLDivElement | null>;
 }
 
 const NEXT_PUBLIC_S3_BASE_URL = process.env.NEXT_PUBLIC_S3_BASE_URL;
 
-export default function ProductCard({ product }: ProductCardProps) {
+export default function ProductCard({ product, ref }: ProductCardProps) {
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 flex flex-col justify-between">
+    <div
+      ref={ref}
+      className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 flex flex-col justify-between"
+    >
       <div className="relative h-60 bg-gray-200">
         {product.imageUrl ? (
           <Image
@@ -40,7 +45,9 @@ export default function ProductCard({ product }: ProductCardProps) {
         </p>
 
         <div className="flex justify-between items-center">
-          <span className="text-lg font-bold">${formatPrice(product.price)}</span>
+          <span className="text-lg font-bold">
+            ${formatPrice(product.price)}
+          </span>
           <Link
             href={`/product/details/${product.sku}`}
             className={`px-4 py-2 rounded-md ${
