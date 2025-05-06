@@ -3,45 +3,55 @@
 import { useState, useEffect, Suspense } from "react";
 import { NextPage } from "next";
 import { Product } from "../../_lib/interfaces";
-import ProductGrid from "../../_components/product/productGrid";
 import MainNavigationBar from "../../_components/navigation/mainNavigationBar";
 import MainFooter from "../../_components/footer/mainFooter";
 import { useSearchParams } from "next/navigation";
 import Loader from "../../_components/loader/Loader";
 import { PUBLIC } from "../../_lib/constant";
+import InfiniteScrollProducts from "../../_components/product/infiniteScrollProducts";
 
 const Products: NextPage = () => {
+  const [initialProducts, setInitialProducts] = useState<Product[]>([]);
+
   const searchParams = useSearchParams();
   const search = searchParams.get("search");
 
-  const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetchProducts();
+    getInitialProducts();
   }, [search]);
 
-  const fetchProducts = async () => {
-    setIsLoading(true);
-    setError(null);
+  const getProducts = async (page = 1): Promise<Product[]> => {
     try {
+      setIsLoading(true);
+      setError(null);
       const res = search
-        ? await fetch(`/api/products?search=${search}&available=true`)
-        : await fetch("/api/products?available=true");
+        ? await fetch(
+            `/api/products?search=${search}&available=true&page=${page}&limit=16`
+          )
+        : await fetch(`/api/products?available=true&page=${page}&limit=16`);
+
       const data = await res.json();
 
-      if (data.success) {
-        setProducts(data.data);
-      } else {
-        setError("Failed to load products");
-      }
+      if (!data.success) setError("Failed to load products");
+      if (page === 1) setInitialProducts(data.data);
+
+      return data.data;
     } catch (error) {
       setError("Error connecting to the server");
+      return [];
     } finally {
       setIsLoading(false);
     }
   };
+
+  const getInitialProducts = async (): Promise<Product[]> =>
+    await getProducts();
+
+  const fetchMoreProducts = async (page: number): Promise<Product[]> =>
+    await getProducts(page);
 
   return (
     <>
@@ -49,9 +59,7 @@ const Products: NextPage = () => {
         <MainNavigationBar type={PUBLIC} />
 
         <div className="container mx-auto px-4 py-8">
-          <h1 className="text-3xl font-bold mb-6">
-            Product Catalog Page (public)
-          </h1>
+          <h1 className="text-3xl font-bold mb-6">Product Catalog</h1>
 
           {error && (
             <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
@@ -59,7 +67,14 @@ const Products: NextPage = () => {
             </div>
           )}
 
-          <ProductGrid products={products} />
+          {initialProducts.length ? (
+            <InfiniteScrollProducts
+              initialProducts={initialProducts}
+              fetchMoreProducts={fetchMoreProducts}
+            />
+          ) : (
+            <div>Product not found</div>
+          )}
         </div>
 
         <MainFooter />
