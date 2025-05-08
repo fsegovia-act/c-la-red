@@ -21,7 +21,7 @@ const nextConfig = {
               "default-src 'self'; " +
               "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://cdn.jsdelivr.net; " +
               "connect-src 'self' https://cdn.jsdelivr.net; " +
-              "img-src 'self' data:; " +
+              "img-src 'self' data: https://c-la-red.s3.us-east-2.amazonaws.com; " +
               "style-src 'self' 'unsafe-inline';",
           },
         ],
@@ -29,5 +29,4 @@ const nextConfig = {
     ];
   },
 };
-
 export default nextConfig;
