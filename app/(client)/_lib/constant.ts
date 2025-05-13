@@ -5,6 +5,7 @@ export const BUSINESS_PHONE_NUMBER: string = "+5493456260360";
 
 export const PUBLIC = "public";
 export const PRIVATE = "private";
+export const PRODUCTION = "production";
 
 export const PUBLIC_MENU_ITEMS = [
   {
