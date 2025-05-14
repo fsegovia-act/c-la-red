@@ -39,11 +39,11 @@ const HomePage = () => {
       <main>
         <MainBanner />
 
-        <CategoryBanner />
+        <CategoryBanner featuredCategories={true} />
 
         <FeaturedProductsBanner />
 
-        <SpecialOffersBanner />
+        <SpecialOffersBanner featuredOffers={true} />
 
         <AdditionalInformationBanner />
 

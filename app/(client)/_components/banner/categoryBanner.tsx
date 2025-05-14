@@ -3,13 +3,20 @@
 import Link from "next/link";
 import { CATEGORIES } from "../../_lib/constant";
 
-const CategoryBanner = () => {
+const CategoryBanner = ({
+  featuredCategories,
+}: {
+  featuredCategories?: boolean;
+}) => {
   return (
     <section className="py-12 bg-white">
       <div className="container mx-auto px-4">
-        <h2 className="text-2xl font-bold mb-8 text-gray-800">
-          Categorías destacadas
-        </h2>
+        {featuredCategories && (
+          <h2 className="text-2xl font-bold mb-8 text-gray-800">
+            Categorías destacadas
+          </h2>
+        )}
+        
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
           {CATEGORIES.map((category) => (
             <Link
