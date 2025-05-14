@@ -48,11 +48,11 @@ const SpecialOffersBanner = () => {
               key={offer._id}
               className="flex flex-col md:flex-row bg-gradient-to-r from-yellow-50 to-yellow-100 rounded-lg shadow-md overflow-hidden"
             >
-              <div className="md:w-1/3 bg-gray-200 flex items-center justify-center">
+              <div className="h-48 md:h-auto md:w-1/3 bg-white flex items-center justify-center">
                 <img
                   src={`${NEXT_PUBLIC_S3_BASE_URL}${offer.imageUrl}`}
                   alt={offer.name}
-                  className="w-full"
+                  className="w-auto h-full md:w-full md:h-auto"
                 />
               </div>
               <div className="md:w-2/3 p-6">
@@ -64,7 +64,9 @@ const SpecialOffersBanner = () => {
                 <h3 className="font-bold text-xl mb-2 text-gray-800">
                   {offer.name}
                 </h3>
-                <p className="text-gray-600 mb-4">{offer.description}</p>
+                <p className="text-gray-600 mb-4 line-clamp-3">
+                  {offer.description}
+                </p>
                 <div className="flex items-center mb-4">
                   <span className="text-3xl font-bold text-blue-700 mr-3">
                     {formatPrice(offer.price)}
