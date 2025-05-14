@@ -3,7 +3,7 @@
     "deploymentEnabled": {
       "main": true,
       "staging": true,
-      "dev": true,
+      "dev": false,
       "preview": false,
       "feature/*": false
     }
