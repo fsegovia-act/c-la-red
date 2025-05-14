@@ -50,13 +50,13 @@ const FeaturedProductsBanner = () => {
               key={product._id}
               className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition duration-300 flex flex-col justify-between"
             >
-              <div className="h-48 bg-gray-200 flex items-center justify-center">
+              <div className="h-48 flex items-center justify-center">
                 {product.imageUrl ? (
-                  <div className="relative w-full h-full overflow-hidden">
+                  <div className="relative w-full h-full overflow-hidden flex items-center justify-center">
                     <img
                       src={`${NEXT_PUBLIC_S3_BASE_URL}${product.imageUrl}`}
                       alt={product.name}
-                      className="w-full"
+                      className="h-full"
                     />
                   </div>
                 ) : (
