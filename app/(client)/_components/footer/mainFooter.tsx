@@ -16,7 +16,7 @@ const MainFooter = () => {
               Ofreciendo los mejores productos desde 2020. Tu satisfacción es
               nuestra prioridad.
             </p>
-            <div className="flex space-x-4">
+            {/* <div className="flex space-x-4">
               <a href="#" className="text-gray-300 hover:text-white">
                 <span>FB</span>
               </a>
@@ -26,7 +26,7 @@ const MainFooter = () => {
               <a href="#" className="text-gray-300 hover:text-white">
                 <span>TW</span>
               </a>
-            </div>
+            </div> */}
           </div>
           <div>
             <h3 className="text-lg font-bold mb-4">Categorías</h3>
