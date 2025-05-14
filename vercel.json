@@ -1,0 +1,17 @@
+{
+  "git": {
+    "deploymentEnabled": {
+      "main": true,
+      "staging": true,
+      "dev": true,
+      "preview": false,
+      "feature/*": false
+    }
+  },
+  "github": {
+    "enabled": true,
+    "silent": false,
+    "autoAlias": true
+  },
+  "ignoreCommand": "if [[ \"$VERCEL_GIT_PULL_REQUEST_ID\" != \"\" ]]; then exit 1; elif [[ \"$VERCEL_GIT_COMMIT_REF\" == \"main\" || \"$VERCEL_GIT_COMMIT_REF\" == \"staging\" ]]; then exit 1; else exit 0; fi"
+}
