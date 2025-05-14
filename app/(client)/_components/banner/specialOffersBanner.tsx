@@ -7,7 +7,11 @@ import { useRouter } from "next/navigation";
 
 const NEXT_PUBLIC_S3_BASE_URL = process.env.NEXT_PUBLIC_S3_BASE_URL;
 
-const SpecialOffersBanner = () => {
+const SpecialOffersBanner = ({
+  featuredOffers,
+}: {
+  featuredOffers?: boolean;
+}) => {
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -39,9 +43,12 @@ const SpecialOffersBanner = () => {
   return (
     <section className="py-12 bg-white">
       <div className="container mx-auto px-4">
-        <h2 className="text-2xl font-bold mb-8 text-gray-800">
-          Ofertas especiales
-        </h2>
+        {featuredOffers && (
+          <h2 className="text-2xl font-bold mb-8 text-gray-800">
+            Ofertas especiales
+          </h2>
+        )}
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {products.map((offer) => (
             <div
