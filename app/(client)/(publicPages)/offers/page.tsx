@@ -3,6 +3,9 @@
 import { NextPage } from "next";
 import MainNavigationBar from "../../_components/navigation/mainNavigationBar";
 import MainFooter from "../../_components/footer/mainFooter";
+import SpecialOffersBanner from "../../_components/banner/specialOffersBanner";
+import AdditionalInformationBanner from "../../_components/banner/additionalInformationBanner";
+import NewslatterBanner from "../../_components/banner/newslatterBanner";
 import { PUBLIC } from "../../_lib/constant";
 
 const OffersPage: NextPage = () => {
@@ -14,6 +17,12 @@ const OffersPage: NextPage = () => {
         <div className="container mx-auto px-4 py-8">
           <h1 className="text-3xl font-bold mb-6">Offers</h1>
         </div>
+
+        <SpecialOffersBanner />
+
+        <AdditionalInformationBanner />
+
+        <NewslatterBanner />
 
         <MainFooter />
       </div>
