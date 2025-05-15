@@ -27,7 +27,7 @@ const Search = ({ type }: { type: typeof PUBLIC | typeof PRIVATE }) => {
           }}
           value={search}
           type="text"
-          placeholder="Buscar productos, marcas y más..."
+          placeholder="Buscar producto..."
           className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-blue-500"
         />
         <button
