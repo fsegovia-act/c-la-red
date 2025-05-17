@@ -6,6 +6,7 @@ import { useCookies } from "../../hooks/useCookies";
 import Image from "next/image";
 import Link from "next/link";
 import { Eye, EyeOff, Lock, Mail, AlertCircle } from "lucide-react";
+import { useAppContext } from "../../context/AppContext";
 
 interface FormData {
   email: string;
@@ -28,6 +29,7 @@ export default function SignIn() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const { setCookie } = useCookies();
+  const { login } = useAppContext();
 
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {};
@@ -83,15 +85,15 @@ export default function SignIn() {
           password: "",
         });
         setErrors({});
-        setShowPassword(false);
-        
-        setCookie("token", data.token, {
+
+        setCookie("token", data.data.token, {
           expires: 7,
           path: "/",
           secure: process.env.NODE_ENV === "production",
           sameSite: "strict",
         });
 
+        login(data.data.user, data.data.token);
         router.push(`/products/management`);
       } else {
         setErrors({ general: data.message || "Failed to create product" });
