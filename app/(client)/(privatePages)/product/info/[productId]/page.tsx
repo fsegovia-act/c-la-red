@@ -5,6 +5,7 @@ import { Product } from "../../../../_lib/interfaces";
 import InfoProduct from "../../../../_components/product/info";
 import { PRIVATE } from "../../../../_lib/constant";
 import MainNavigationBar from "../../../../_components/navigation/mainNavigationBar";
+import { useRequireAuth } from "../../../../hooks/useRequireAuth";
 
 export default function ProductDetailsPage() {
   const params = useParams();
@@ -14,6 +15,8 @@ export default function ProductDetailsPage() {
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+
+  useRequireAuth();
 
   useEffect(() => {
     async function fetchProduct() {

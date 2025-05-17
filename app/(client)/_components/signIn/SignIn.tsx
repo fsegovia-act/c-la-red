@@ -1,9 +1,12 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useCookies } from "../../hooks/useCookies";
 import Image from "next/image";
 import Link from "next/link";
 import { Eye, EyeOff, Lock, Mail, AlertCircle } from "lucide-react";
+import { useAppContext } from "../../context/AppContext";
 
 interface FormData {
   email: string;
@@ -24,6 +27,9 @@ export default function SignIn() {
   const [errors, setErrors] = useState<FormErrors>({});
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+  const { setCookie } = useCookies();
+  const { login } = useAppContext();
 
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {};
@@ -67,14 +73,34 @@ export default function SignIn() {
     setIsLoading(true);
 
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      setErrors({
-        general: "Invalid email or password. Please try again.",
+      const res = await fetch("/api/auth/sign-in", {
+        method: "POST",
+        body: JSON.stringify(formData),
       });
+      const data = await res.json();
 
+      if (data.success) {
+        setFormData({
+          email: "",
+          password: "",
+        });
+        setErrors({});
+
+        setCookie("token", data.data.token, {
+          expires: 7,
+          path: "/",
+          secure: process.env.NODE_ENV === "production",
+          sameSite: "strict",
+        });
+
+        login(data.data.user, data.data.token);
+        router.push(`/products/management`);
+      } else {
+        setErrors({ general: data.message || "Failed to create product" });
+      }
     } catch (error) {
       setErrors({
-        general: "An error occurred. Please try again later.",
+        general: error.message || "An error occurred. Please try again later.",
       });
     } finally {
       setIsLoading(false);
