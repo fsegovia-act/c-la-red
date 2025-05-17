@@ -4,6 +4,7 @@ import validator from "validator";
 import { UserRole } from "../_lib/interfaces";
 
 export interface IUser extends Document {
+  userId: string;
   firstName: string;
   lastName: string;
   email: string;
