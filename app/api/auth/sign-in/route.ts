@@ -2,8 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { HttpError } from "../../_lib/customClasses";
 import dbConnect from "../../_lib/mongodb";
 import { User } from "../../_models/Users";
-import { generateToken } from "../../middleware/auth";
 import { ADMIN, SUPER_ADMIN } from "../../_lib/interfaces";
+import { generateToken } from "../../_helpers/tokens";
 
 export async function POST(req: NextRequest) {
   try {
