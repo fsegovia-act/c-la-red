@@ -1,3 +1,5 @@
+import { UserRole } from "../../api/_lib/interfaces";
+
 export interface Product {
   _id: string;
   name: string;
@@ -36,4 +38,14 @@ export interface NavbarProps {
   navItems: NavItem[];
   variant?: "slide-right" | "slide-down" | "fade";
   colorScheme?: "light" | "dark";
+}
+
+export interface User {
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  phoneNumber?: string;
+  profileImageUrl?: string;
+  isActive?: boolean;
+  role?: UserRole;
 }
