@@ -12,7 +12,7 @@ interface JwtPayload {
 
 export const generateToken = (user: IUser): string => {
   return jwt.sign({ userId: user._id, role: user.role }, JWT_SECRET, {
-    expiresIn: "1d",
+    expiresIn: "1h",
   });
 };
 
