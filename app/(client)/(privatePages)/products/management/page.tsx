@@ -8,6 +8,7 @@ import { useSearchParams } from "next/navigation";
 import Loader from "../../../_components/loader/Loader";
 import { PRIVATE } from "../../../_lib/constant";
 import MainNavigationBar from "../../../_components/navigation/mainNavigationBar";
+import { useRequireAuth } from "../../../hooks/useRequireAuth";
 
 const ProductManagement: NextPage = () => {
   const searchParams = useSearchParams();
@@ -15,6 +16,8 @@ const ProductManagement: NextPage = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+
+  useRequireAuth();
 
   useEffect(() => {
     fetchProducts();

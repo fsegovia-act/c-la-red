@@ -22,7 +22,7 @@ const FeaturedProductsBanner = () => {
     setError(null);
     try {
       const res = await fetch(
-        "/api/products?page=1&limit=4&featured=true&&available=true&available=true"
+        "/api/products?page=1&limit=4&featured=true&available=true"
       );
       const data = await res.json();
 
