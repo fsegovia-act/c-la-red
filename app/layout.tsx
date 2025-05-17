@@ -1,9 +1,12 @@
+"use client";
+
 import type { Metadata } from "next";
 import "./globals.css";
 import GoogleTagManager from "./(client)/_components/gtm/GoogleTagManager";
 import GoogleTagManagerNoScript from "./(client)/_components/gtm/GoogleTagManagerNoScript";
+import { AppProvider } from "./(client)/context/AppContext";
 
-export const metadata: Metadata = {
+const metadata: Metadata = {
   title: "C La Red",
   description: "Tienda online - eléctronica, hogar, accesorios y más.",
 };
@@ -21,7 +24,7 @@ export default function RootLayout({
       </head>
       <body>
         <GoogleTagManagerNoScript gtmId={GTM_ID} />
-        {children}
+        <AppProvider>{children}</AppProvider>
       </body>
     </html>
   );
