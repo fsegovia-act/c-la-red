@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useCookies } from "../../hooks/useCookies";
 import Image from "next/image";
 import Link from "next/link";
 import { Eye, EyeOff, Lock, Mail, AlertCircle } from "lucide-react";
@@ -24,6 +26,8 @@ export default function SignIn() {
   const [errors, setErrors] = useState<FormErrors>({});
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+  const { setCookie } = useCookies();
 
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {};
@@ -67,14 +71,34 @@ export default function SignIn() {
     setIsLoading(true);
 
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      setErrors({
-        general: "Invalid email or password. Please try again.",
+      const res = await fetch("/api/auth/sign-in", {
+        method: "POST",
+        body: JSON.stringify(formData),
       });
+      const data = await res.json();
 
+      if (data.success) {
+        setFormData({
+          email: "",
+          password: "",
+        });
+        setErrors({});
+        setShowPassword(false);
+        
+        setCookie("token", data.token, {
+          expires: 7,
+          path: "/",
+          secure: process.env.NODE_ENV === "production",
+          sameSite: "strict",
+        });
+
+        router.push(`/products/management`);
+      } else {
+        setErrors({ general: data.message || "Failed to create product" });
+      }
     } catch (error) {
       setErrors({
-        general: "An error occurred. Please try again later.",
+        general: error.message || "An error occurred. Please try again later.",
       });
     } finally {
       setIsLoading(false);
