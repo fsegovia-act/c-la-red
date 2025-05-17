@@ -6,6 +6,7 @@ import { Product } from "../../../../_lib/interfaces";
 import InfoProduct from "../../../../_components/product/info";
 import { PRIVATE } from "../../../../_lib/constant";
 import MainNavigationBar from "../../../../_components/navigation/mainNavigationBar";
+import { useRequireAuth } from "../../../../hooks/useRequireAuth";
 
 export default function DeleteProductPage() {
   const params = useParams();
@@ -16,6 +17,8 @@ export default function DeleteProductPage() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const [error, setError] = useState<string | null>(null);
+
+  useRequireAuth();
 
   useEffect(() => {
     if (productId) {

@@ -7,6 +7,7 @@ import InfoProduct from "../../../../_components/product/info";
 import EditProduct from "../../../../_components/product/edit";
 import MainNavigationBar from "../../../../_components/navigation/mainNavigationBar";
 import { PRIVATE } from "../../../../_lib/constant";
+import { useRequireAuth } from "../../../../hooks/useRequireAuth";
 
 export default function EditProductPage() {
   const params = useParams();
@@ -18,6 +19,8 @@ export default function EditProductPage() {
   const [typeAction, setTypeAction] = useState<string>("edit");
 
   const [error, setError] = useState<string | null>(null);
+
+  useRequireAuth();
 
   useEffect(() => {
     if (productId) {
