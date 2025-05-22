@@ -25,7 +25,7 @@ interface AppProviderProps {
 
 export const AppProvider = ({ children }: AppProviderProps) => {
   const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const login = (userData: User, token: string) => {
     setUser(userData);
@@ -46,6 +46,7 @@ export const AppProvider = ({ children }: AppProviderProps) => {
   const logout = () => {
     setUser(null);
     localStorage.removeItem("user");
+    Cookies.remove("token");
   };
 
   const updateUser = (userData: Partial<User>) => {
@@ -93,23 +94,17 @@ export const AppProvider = ({ children }: AppProviderProps) => {
             console.error("Failed to fetch user data:", error);
           }
         } else {
-          const storedUser = localStorage.getItem("user");
-          if (storedUser) {
-            try {
-              const parsedUser = JSON.parse(storedUser);
-              setUser(parsedUser as User);
-            } catch (e) {
-              localStorage.removeItem("user");
-            }
-          }
+          localStorage.removeItem("user");
+          Cookies.remove("token");
+          setUser(null);
         }
       } finally {
         setIsLoading(false);
       }
     };
 
-    initializeAuth();
-  }, []);
+    if (!user) initializeAuth();
+  }, [user]);
 
   const contextValue: AppContextValue = {
     user,
