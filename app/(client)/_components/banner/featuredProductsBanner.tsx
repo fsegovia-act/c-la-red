@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { formatPrice } from "../../_lib/helpers";
 import { Product } from "../../_lib/interfaces";
 import { useRouter } from "next/navigation";
+import Loader from "../loader/Loader";
 
 const NEXT_PUBLIC_S3_BASE_URL = process.env.NEXT_PUBLIC_S3_BASE_URL;
 
@@ -38,6 +39,17 @@ const FeaturedProductsBanner = () => {
     }
   };
 
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+          <p className="font-bold">Error</p>
+          <p>{error}</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <section className="py-12 bg-gray-100">
       <div className="container mx-auto px-4">
@@ -45,6 +57,8 @@ const FeaturedProductsBanner = () => {
           Productos destacados
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+          {isLoading && <Loader />}
+
           {products.map((product) => (
             <div
               key={product._id}
