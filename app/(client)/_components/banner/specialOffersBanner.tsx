@@ -59,7 +59,8 @@ const SpecialOffersBanner = ({
                 <img
                   src={`${NEXT_PUBLIC_S3_BASE_URL}${offer.imageUrl}`}
                   alt={offer.name}
-                  className="w-auto h-full md:w-full md:h-auto"
+                  className="w-auto h-full md:w-full md:h-auto hover:cursor-pointer"
+                  onClick={() => router.push(`/product/details/${offer.sku}`)}
                 />
               </div>
               <div className="md:w-2/3 p-6">
@@ -86,12 +87,6 @@ const SpecialOffersBanner = ({
                   <span className="text-sm text-red-600 font-medium">
                     ¡Solo quedan {offer.stockQuantity} disponibles!
                   </span>
-                  <button
-                    onClick={() => router.push(`/product/details/${offer.sku}`)}
-                    className="bg-blue-700 text-white px-6 py-2 rounded hover:bg-blue-800 transition duration-300 hover:cursor-pointer"
-                  >
-                    Ver ahora
-                  </button>
                 </div>
               </div>
             </div>

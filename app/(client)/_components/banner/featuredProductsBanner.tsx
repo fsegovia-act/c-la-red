@@ -56,7 +56,10 @@ const FeaturedProductsBanner = () => {
                     <img
                       src={`${NEXT_PUBLIC_S3_BASE_URL}${product.imageUrl}`}
                       alt={product.name}
-                      className="h-full"
+                      className="h-full hover:cursor-pointer"
+                      onClick={() =>
+                        router.push(`/product/details/${product.sku}`)
+                      }
                     />
                   </div>
                 ) : (
@@ -89,14 +92,6 @@ const FeaturedProductsBanner = () => {
                   <span className="text-sm text-gray-500">
                     Stock: {product.stockQuantity} und.
                   </span>
-                  <button
-                    onClick={() =>
-                      router.push(`/product/details/${product.sku}`)
-                    }
-                    className="bg-blue-700 text-white px-4 py-2 rounded hover:bg-blue-800 transition duration-300 hover:cursor-pointer"
-                  >
-                    Ver más
-                  </button>
                 </div>
               </div>
             </div>
