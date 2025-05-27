@@ -56,9 +56,13 @@ const FeaturedProductsBanner = () => {
         <h2 className="text-2xl font-bold mb-8 text-gray-800">
           Productos destacados
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-          {isLoading && <Loader />}
+        {isLoading && (
+          <div className="w-full flex justify-center mb-8">
+            <Loader />
+          </div>
+        )}
 
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
           {products.map((product) => (
             <div
               key={product._id}
