@@ -1,8 +1,8 @@
 import { Product } from "../../_lib/interfaces";
 import Image from "next/image";
-import Link from "next/link";
 import { formatPrice } from "../../_lib/helpers";
 import { RefObject } from "react";
+import { useRouter } from "next/navigation";
 
 interface ProductCardProps {
   product: Product;
@@ -12,6 +12,8 @@ interface ProductCardProps {
 const NEXT_PUBLIC_S3_BASE_URL = process.env.NEXT_PUBLIC_S3_BASE_URL;
 
 export default function ProductCard({ product, ref }: ProductCardProps) {
+  const router = useRouter();
+
   return (
     <div
       ref={ref}
@@ -24,7 +26,8 @@ export default function ProductCard({ product, ref }: ProductCardProps) {
             alt={product.name}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            className="object-cover"
+            className="object-cover hover:cursor-pointer"
+            onClick={() => router.push(`/product/details/${product.sku}`)}
           />
         ) : (
           <div className="flex items-center justify-center h-full bg-gray-200 text-gray-500">
@@ -48,17 +51,6 @@ export default function ProductCard({ product, ref }: ProductCardProps) {
           <span className="text-lg font-bold">
             ${formatPrice(product.price)}
           </span>
-          <Link
-            href={`/product/details/${product.sku}`}
-            className={`px-4 py-2 rounded-md ${
-              product.isAvailable
-                ? "bg-blue-600 hover:bg-blue-700 text-white"
-                : "bg-gray-300 cursor-not-allowed text-gray-600"
-            }`}
-            aria-disabled={!product.isAvailable}
-          >
-            {product.isAvailable ? "View Details" : "Unavailable"}
-          </Link>
         </div>
 
         {product.tags && product.tags.length > 0 && (
