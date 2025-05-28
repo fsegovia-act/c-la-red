@@ -8,6 +8,9 @@ import MainNavigationBar from "../../../../_components/navigation/mainNavigation
 import MainFooter from "../../../../_components/footer/mainFooter";
 import AdditionalInformationBanner from "../../../../_components/banner/additionalInformationBanner";
 import { PUBLIC } from "../../../../_lib/constant";
+import Loader from "../../../../_components/loader/Loader";
+import ErrorComponent from "../../../../_components/error/Error";
+import ProductNotFound from "../../../../_components/product/notFound";
 
 export default function ProductDetailsByCodePage() {
   const params = useParams();
@@ -44,34 +47,11 @@ export default function ProductDetailsByCodePage() {
     }
   }, [productCode]);
 
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
-      </div>
-    );
-  }
+  if (loading) return <Loader />;
 
-  if (error) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
-          <p className="font-bold">Error</p>
-          <p>{error}</p>
-        </div>
-      </div>
-    );
-  }
+  if (error) return <ErrorComponent error={error} />;
 
-  if (!product) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded">
-          <p>Product not found</p>
-        </div>
-      </div>
-    );
-  }
+  if (!product) return <ProductNotFound />;
 
   return (
     <div className="flex flex-col justify-between min-h-screen">
