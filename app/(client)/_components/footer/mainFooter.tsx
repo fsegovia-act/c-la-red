@@ -83,7 +83,8 @@ const MainFooter = () => {
               <li>Dirección: {BUSINESS_ADDRESS}</li>
               <li>Teléfono: {BUSINESS_PHONE_NUMBER}</li>
               <li>Email: {BUSINESS_EMAIL}</li>
-              <li>Horario: Lun-Vie 9:00-18:00</li>
+              <li>Horario: Lun-Vie 17:00-20:30</li>
+              <li>Online (wsp): Lun-Vie 10:00-20:30</li>
             </ul>
           </div>
         </div>
