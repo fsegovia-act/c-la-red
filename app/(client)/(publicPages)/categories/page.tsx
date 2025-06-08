@@ -7,7 +7,8 @@ import MainFooter from "../../_components/footer/mainFooter";
 import CategoryBanner from "../../_components/banner/categoryBanner";
 import AdditionalInformationBanner from "../../_components/banner/additionalInformationBanner";
 import NewslatterBanner from "../../_components/banner/newslatterBanner";
-import { PUBLIC } from "../../_lib/constant";
+import { BUSINESS_PHONE_NUMBER, PUBLIC } from "../../_lib/constant";
+import WhatsAppFloatButton from "../../_components/buttons/whatsapp";
 
 const CategoriesPage: NextPage = () => {
   const params = useParams();
@@ -27,6 +28,8 @@ const CategoriesPage: NextPage = () => {
 
         <NewslatterBanner />
 
+        <WhatsAppFloatButton phoneNumber={BUSINESS_PHONE_NUMBER} />
+        
         <MainFooter />
       </div>
     </>
