@@ -6,6 +6,7 @@ import Image from "next/image";
 import MainFooter from "../../_components/footer/mainFooter";
 import MainNavigationBar from "../../_components/navigation/mainNavigationBar";
 import { BUSINESS_PHONE_NUMBER, PUBLIC, BUSINESS_NAME } from "../../_lib/constant";
+import WhatsAppFloatButton from "../../_components/buttons/whatsapp";
 
 const NEXT_PUBLIC_S3_BASE_URL = process.env.NEXT_PUBLIC_S3_BASE_URL;
 
@@ -66,9 +67,9 @@ export default function AboutUsPage() {
                   satisfacción del cliente.
                 </p>
                 <p className="text-gray-600">
-                  Nuestros años de trayectoria nos han permitido adquirir una vasta
-                  experiencia en el sector, convirtiéndonos en un referente en
-                  reparación de celulares, PCs y notebooks.
+                  Nuestros años de trayectoria nos han permitido adquirir una
+                  vasta experiencia en el sector, convirtiéndonos en un
+                  referente en reparación de celulares, PCs y notebooks.
                 </p>
               </div>
             </div>
@@ -340,6 +341,8 @@ export default function AboutUsPage() {
           </div>
         </div>
       </section>
+
+      <WhatsAppFloatButton phoneNumber={BUSINESS_PHONE_NUMBER} />
 
       <MainFooter />
     </div>

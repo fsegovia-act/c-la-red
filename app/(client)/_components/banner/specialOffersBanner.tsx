@@ -25,7 +25,9 @@ const SpecialOffersBanner = ({
     setIsLoading(true);
     setError(null);
     try {
-      const res = await fetch("/api/products?page=3&limit=2&featured=true");
+      const res = await fetch(
+        "/api/products?page=3&limit=2&featured=true&available=true"
+      );
       const data = await res.json();
 
       if (data.success) {
