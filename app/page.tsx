@@ -10,7 +10,8 @@ import SpecialOffersBanner from "./(client)/_components/banner/specialOffersBann
 import AdditionalInformationBanner from "./(client)/_components/banner/additionalInformationBanner";
 import NewslatterBanner from "./(client)/_components/banner/newslatterBanner";
 import MainFooter from "./(client)/_components/footer/mainFooter";
-import { BUSINESS_NAME, PUBLIC } from "./(client)/_lib/constant";
+import { BUSINESS_NAME, BUSINESS_PHONE_NUMBER, PUBLIC } from "./(client)/_lib/constant";
+import WhatsAppFloatButton from "./(client)/_components/buttons/whatsapp";
 
 const HomePage = () => {
   const [isClient, setIsClient] = useState(false);
@@ -49,6 +50,8 @@ const HomePage = () => {
 
         <NewslatterBanner />
       </main>
+
+      <WhatsAppFloatButton phoneNumber ={BUSINESS_PHONE_NUMBER} />
 
       <MainFooter />
     </div>

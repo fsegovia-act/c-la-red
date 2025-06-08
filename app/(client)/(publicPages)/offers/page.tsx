@@ -6,7 +6,8 @@ import MainFooter from "../../_components/footer/mainFooter";
 import SpecialOffersBanner from "../../_components/banner/specialOffersBanner";
 import AdditionalInformationBanner from "../../_components/banner/additionalInformationBanner";
 import NewslatterBanner from "../../_components/banner/newslatterBanner";
-import { PUBLIC } from "../../_lib/constant";
+import { BUSINESS_PHONE_NUMBER, PUBLIC } from "../../_lib/constant";
+import WhatsAppFloatButton from "../../_components/buttons/whatsapp";
 
 const OffersPage: NextPage = () => {
   return (
@@ -23,6 +24,8 @@ const OffersPage: NextPage = () => {
         <AdditionalInformationBanner />
 
         <NewslatterBanner />
+
+        <WhatsAppFloatButton phoneNumber={BUSINESS_PHONE_NUMBER} />
 
         <MainFooter />
       </div>

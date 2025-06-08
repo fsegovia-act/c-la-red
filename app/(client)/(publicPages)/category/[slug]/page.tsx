@@ -5,12 +5,13 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import MainNavigationBar from "../../../_components/navigation/mainNavigationBar";
 import MainFooter from "../../../_components/footer/mainFooter";
-import { PUBLIC } from "../../../_lib/constant";
+import { BUSINESS_PHONE_NUMBER, PUBLIC } from "../../../_lib/constant";
 import { Product } from "../../../_lib/interfaces";
 import InfiniteScrollProducts from "../../../_components/product/infiniteScrollProducts";
 import Loader from "../../../_components/loader/Loader";
 import ErrorComponent from "../../../_components/error/Error";
 import ProductNotFound from "../../../_components/product/notFound";
+import WhatsAppFloatButton from "../../../_components/buttons/whatsapp";
 
 const CategoryPage: NextPage = () => {
   const [initialProducts, setInitialProducts] = useState<Product[]>([]);
@@ -73,6 +74,8 @@ const CategoryPage: NextPage = () => {
 
           {!isLoading && initialProducts.length === 0 && <ProductNotFound />}
         </div>
+
+        <WhatsAppFloatButton phoneNumber={BUSINESS_PHONE_NUMBER} />
 
         <MainFooter />
       </div>
