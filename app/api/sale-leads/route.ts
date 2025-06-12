@@ -106,5 +106,5 @@ export const POST = withProtection(
   async (req: NextRequest) => {
     return createSaleLead(req);
   },
-  [ADMIN, SUPER_ADMIN]
+  []
 );
