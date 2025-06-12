@@ -44,12 +44,12 @@ const FeaturedProductsBanner = () => {
 
   return (
     <section className="py-12 bg-gray-100">
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4 min-h-[376px]">
         <h2 className="text-2xl font-bold mb-8 text-gray-800">
           Productos destacados
         </h2>
         {isLoading && (
-          <div className="w-full flex justify-center mb-8">
+          <div className="w-full flex justify-center mb-8 min-h-[inherit]">
             <Loader />
           </div>
         )}
