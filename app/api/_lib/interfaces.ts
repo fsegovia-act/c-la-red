@@ -26,3 +26,7 @@ export interface UpdateUserInput {
   isActive?: boolean;
   role?: UserRole;
 }
+
+export interface CreateSaleLeadInput {
+  email: string;
+}
