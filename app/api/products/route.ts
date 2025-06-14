@@ -130,8 +130,9 @@ export async function POST(request) {
     const product = await Product.create(body);
     return NextResponse.json({ success: true, data: product }, { status: 201 });
   } catch (error) {
+    console.log(error);
     return NextResponse.json(
-      { success: false, error: error.message },
+      { success: false, error: error.message.toString() },
       { status: 400 }
     );
   }
