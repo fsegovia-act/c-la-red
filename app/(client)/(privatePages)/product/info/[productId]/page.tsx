@@ -67,7 +67,7 @@ export default function ProductDetailsPage() {
             onClick={() => router.push(`/product/edit/${product._id}`)}
             className="bg-blue-700 text-white px-4 py-2 rounded hover:bg-blue-800 transition duration-300 hover:cursor-pointer max-h-[40px] hover:cursor-pointer"
           >
-            Edit Product
+            Edit
           </button>
         </div>
 
