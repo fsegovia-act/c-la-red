@@ -123,16 +123,19 @@ export async function POST(request) {
       }
       const fileName = normalizeFileName(file.name);
 
-      const filePath = await uploadFileToS3(buffer, fileName);
+      const sanitizeFileName = (fileName) => {
+        return fileName.replace(/[^a-zA-Z0-9._-]/g, "_").replace(/\s+/g, "_");
+      };
+
+      const filePath = await uploadFileToS3(buffer, sanitizeFileName(fileName));
       body.imageUrl = filePath;
     }
 
     const product = await Product.create(body);
     return NextResponse.json({ success: true, data: product }, { status: 201 });
   } catch (error) {
-    console.log(error);
     return NextResponse.json(
-      { success: false, error: error.message.toString() },
+      { success: false, error: error.message },
       { status: 400 }
     );
   }
