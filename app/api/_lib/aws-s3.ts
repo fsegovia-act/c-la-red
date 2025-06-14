@@ -23,18 +23,23 @@ const s3Client = new S3Client({
 });
 
 export async function uploadFileToS3(file, fileName) {
-  const fileBuffer = file;
-  const params = {
-    Bucket: S3_BUCKET_NAME,
-    Key: `images/products/${fileName}`,
-    Body: fileBuffer,
-    ContentType: "image/jpg",
-  };
-
-  const command = new PutObjectCommand(params);
-  await s3Client.send(command);
-
-  return `/images/products/${fileName}`;
+  try {
+    const fileBuffer = file;
+    const params = {
+      Bucket: S3_BUCKET_NAME,
+      Key: `images/products/${fileName}`,
+      Body: fileBuffer,
+      ContentType: "image/jpg",
+    };
+  
+    const command = new PutObjectCommand(params);
+    await s3Client.send(command);
+  
+    return `/images/products/${fileName}`;
+    
+  } catch (e) {
+    throw e;
+  }
 }
 
 export async function deleteFileInS3(filePath) {

@@ -55,7 +55,7 @@ const CreateProduct: React.FC<ProductFormProps> = ({
         ...form,
         price: parseFloat(form.price),
         stockQuantity: parseInt(form.stockQuantity, 10),
-        file: file,
+        file: file
       };
 
       const formData = new FormData();
