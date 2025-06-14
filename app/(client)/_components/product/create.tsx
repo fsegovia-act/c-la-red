@@ -89,7 +89,8 @@ const CreateProduct: React.FC<ProductFormProps> = ({
         setError(data.error || "Failed to create product");
       }
     } catch (error) {
-      setError("Error submitting the form");
+      console.log(error);
+      setError(error.message ? error.message : error.toString());
     } finally {
       setIsLoading(false);
     }
