@@ -123,7 +123,11 @@ export async function POST(request) {
       }
       const fileName = normalizeFileName(file.name);
 
-      const filePath = await uploadFileToS3(buffer, fileName);
+      const sanitizeFileName = (fileName) => {
+        return fileName.replace(/[^a-zA-Z0-9._-]/g, "_").replace(/\s+/g, "_");
+      };
+
+      const filePath = await uploadFileToS3(buffer, sanitizeFileName(fileName));
       body.imageUrl = filePath;
     }
 
