@@ -44,6 +44,15 @@ const CreateProduct: React.FC<ProductFormProps> = ({
     });
   };
 
+  const blobToFile = (blob) => {
+    const fileName = blob?.name || "image-product-default.jpg";
+    const file = new File([blob], fileName, {
+      type: blob.type,
+      lastModified: Date.now(),
+    });
+    return file;
+  };
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
@@ -55,7 +64,9 @@ const CreateProduct: React.FC<ProductFormProps> = ({
       maxWidthOrHeight: 1024,
       useWebWorker: true,
     };
-    const optimizedFile = await imageCompression(file, options);
+
+    const blobOptimizedFile = await imageCompression(file, options);
+    const optimizedFile = blobToFile(blobOptimizedFile);
     setCompressedFile(optimizedFile);
 
     setIsLoading(true);
@@ -66,7 +77,7 @@ const CreateProduct: React.FC<ProductFormProps> = ({
         ...form,
         price: parseFloat(form.price),
         stockQuantity: parseInt(form.stockQuantity, 10),
-        file: compressedFile
+        file: optimizedFile
       };
 
       const formData = new FormData();
