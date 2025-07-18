@@ -209,6 +209,14 @@ const CreateProduct: React.FC<ProductFormProps> = ({
         </div>
 
         <div>
+          {file && (
+            <label
+            htmlFor="description"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
+           File name:{file.name} File size:{file.size} File type:{file.type}
+          </label>
+          )}
           <label
             htmlFor="description"
             className="block text-sm font-medium text-gray-700 mb-1"
