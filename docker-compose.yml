@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  nextjs-app:
+    image: node:18
+    working_dir: /c-la-red
+    volumes:
+      - .:/c-la-red
+      - myapp:/app/node_modules
+    ports:
+      - "3000:3000"
+    command: sh -c "npm install && npm run dev"
+    env_file:
+      - .env.local
+volumes:
+  myapp:
