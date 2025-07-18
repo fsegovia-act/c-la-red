@@ -66,10 +66,15 @@ const CreateProduct: React.FC<ProductFormProps> = ({
 
       formData.append("file", file);
 
-      const res = await fetch("/api/products", {
+      const res: Response = await fetch("/api/products", {
         method: "POST",
         body: formData,
       });
+
+      if (!res.ok) {
+        const errorText = await res.text();
+        throw new Error(errorText || `Error ${res.status}`);
+      }
 
       const data = await res.json();
 
