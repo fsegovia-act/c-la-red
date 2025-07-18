@@ -9,6 +9,7 @@ import {
 } from "react";
 import { ProductForm } from "../../_lib/interfaces";
 import BackgroundRemover from "../removeBg/RemoveBg";
+import imageCompression from 'browser-image-compression';
 
 interface ProductFormProps {
   fetchProducts: () => void;
@@ -24,6 +25,7 @@ const CreateProduct: React.FC<ProductFormProps> = ({
   isLoading,
 }: ProductFormProps) => {
   const [file, setFile] = useState<File | null>(null);
+  const [compressedFile, setCompressedFile] = useState<File | null>(null);
   const [form, setForm] = useState<ProductForm>({
     name: "",
     description: "",
@@ -47,6 +49,15 @@ const CreateProduct: React.FC<ProductFormProps> = ({
 
     if (!file) return;
 
+    // optimize image
+    const options = {
+      maxSizeMB: 1,
+      maxWidthOrHeight: 1024,
+      useWebWorker: true,
+    };
+    const optimizedFile = await imageCompression(file, options);
+    setCompressedFile(optimizedFile);
+
     setIsLoading(true);
     setError(null);
 
@@ -55,7 +66,7 @@ const CreateProduct: React.FC<ProductFormProps> = ({
         ...form,
         price: parseFloat(form.price),
         stockQuantity: parseInt(form.stockQuantity, 10),
-        file: file
+        file: compressedFile
       };
 
       const formData = new FormData();
@@ -220,6 +231,14 @@ const CreateProduct: React.FC<ProductFormProps> = ({
             className="block text-sm font-medium text-gray-700 mb-1"
           >
            File name:{file.name} File size:{file.size} File type:{file.type}
+          </label>
+          )}
+          {compressedFile && (
+            <label
+            htmlFor="description"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
+           Compressed File name:{compressedFile.name} File size:{compressedFile.size} File type:{compressedFile.type}
           </label>
           )}
           <label
