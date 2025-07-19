@@ -99,28 +99,41 @@ const BarcodeScanner = ({ onCodeDetected, onError, code, setCode }) => {
   }, [isScanning]);
 
   return (
-    <div className="barcode-scanner">
-      <h2>Escáner de Códigos de Barras</h2>
+    <div className="max-w-3xl mx-auto p-4">
+      <h2 className="text-xl font-semibold mb-4">
+        Escáner de Códigos de Barras
+      </h2>
 
-      <div className="detected-code">
-        <div className="field-info">Code: {code}</div>
-        <div className="field-info">
+      <div className="bg-sky-50 border border-sky-500 rounded-lg p-4 mb-4">
+        <div className="bg-sky-500 text-white p-2 my-1 rounded font-mono text-lg">
+          Code: {code}
+        </div>
+        <div className="bg-sky-500 text-white p-2 my-1 rounded font-mono text-lg">
           {isScanning ? "Escaneando..." : "Escáner Detenido"}
         </div>
 
-        <div className="scanner-controls">
+        <div className="my-4 text-left">
           {!isScanning ? (
-            <button onClick={startScanner} className="btn-start">
+            <button
+              onClick={startScanner}
+              className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-3 px-6 rounded border-none cursor-pointer transition-colors mr-2"
+            >
               Iniciar
             </button>
           ) : (
-            <button onClick={stopScanner} className="btn-stop">
+            <button
+              onClick={stopScanner}
+              className="bg-red-500 hover:bg-red-600 text-white font-semibold py-3 px-6 rounded border-none cursor-pointer transition-colors mr-2"
+            >
               Detener
             </button>
           )}
 
           {code && (
-            <button onClick={clearDetectedCode} className="btn-clear">
+            <button
+              onClick={clearDetectedCode}
+              className="bg-gray-500 hover:bg-gray-600 text-white font-semibold py-3 px-6 rounded border-none cursor-pointer transition-colors"
+            >
               Limpiar
             </button>
           )}
@@ -129,92 +142,8 @@ const BarcodeScanner = ({ onCodeDetected, onError, code, setCode }) => {
 
       <div
         ref={scannerRef}
-        className="scanner-container"
-        style={{ width: "100%", height: "100px" }}
+        className="w-full h-24 border-2 border-dashed border-gray-300 rounded-lg relative overflow-hidden bg-black"
       />
-
-      <style jsx>{`
-        .barcode-scanner {
-          max-width: 800px;
-          margin: 0 auto;
-          padding: 1rem;
-        }
-
-        .detected-code {
-          background-color: #f0f9ff;
-          border: 1px solid #0ea5e9;
-          border-radius: 8px;
-          padding: 1rem;
-          margin-bottom: 1rem;
-        }
-
-        .detected-code ul {
-          list-style: none;
-          padding: 0;
-        }
-
-        .field-info {
-          background-color: #0ea5e9;
-          color: white;
-          padding: 0.5rem;
-          margin: 0.25rem 0;
-          border-radius: 4px;
-          font-family: monospace;
-          font-size: 1.1rem;
-        }
-
-        .scanner-container {
-          border: 2px dashed #ccc;
-          border-radius: 8px;
-          position: relative;
-          overflow: hidden;
-          background-color: #000;
-        }
-
-        .scanner-controls {
-          margin: 1rem 0;
-          text-align: left;
-        }
-
-        .btn-start,
-        .btn-stop,
-        .btn-clear {
-          padding: 0.75rem 1.5rem;
-          border: none;
-          border-radius: 6px;
-          font-weight: 600;
-          cursor: pointer;
-          transition: background-color 0.2s;
-          margin-right: 0.5rem;
-        }
-
-        .btn-start {
-          background-color: #10b981;
-          color: white;
-        }
-
-        .btn-start:hover {
-          background-color: #059669;
-        }
-
-        .btn-stop {
-          background-color: #ef4444;
-          color: white;
-        }
-
-        .btn-stop:hover {
-          background-color: #dc2626;
-        }
-
-        .btn-clear {
-          background-color: #6b7280;
-          color: white;
-        }
-
-        .btn-clear:hover {
-          background-color: #4b5563;
-        }
-      `}</style>
     </div>
   );
 };
