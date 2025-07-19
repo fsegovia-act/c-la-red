@@ -80,6 +80,7 @@ const ProductSearch = () => {
           onError={handleScannerError}
           code={code}
           setCode={setCode}
+          fnCallback={resetSearch}
         />
       )}
       
