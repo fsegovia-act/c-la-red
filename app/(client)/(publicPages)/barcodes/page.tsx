@@ -16,6 +16,7 @@ const ProductSearch = () => {
   const [searchResult, setSearchResult] = useState<ResultsInterface | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [code, setCode] = useState('');
   const results: ResultsInterface[] = [
     {
         code: '1',
@@ -43,7 +44,8 @@ const ProductSearch = () => {
     }
   ]
 
-  const handleCodeDetected = async (code: string) => {
+  const handleCodeDetected = async (code) => {
+    if (code.code) setCode(code.code);
     setLoading(true);
     setError('');
     
@@ -76,6 +78,8 @@ const ProductSearch = () => {
         <BarcodeScanner 
           onCodeDetected={handleCodeDetected}
           onError={handleScannerError}
+          code={code}
+          setCode={setCode}
         />
       )}
       
