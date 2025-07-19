@@ -132,9 +132,18 @@ const BarcodeScanner = ({ onCodeDetected, onError, code, setCode }) => {
           {code && (
             <button
               onClick={clearDetectedCode}
-              className="bg-gray-500 hover:bg-gray-600 text-white font-semibold py-3 px-6 rounded border-none cursor-pointer transition-colors"
+              className="bg-gray-500 hover:bg-gray-600 text-white font-semibold py-3 px-6 rounded border-none cursor-pointer transition-colors mr-2"
             >
               Limpiar
+            </button>
+          )}
+
+          {code && (
+            <button
+              onClick={clearDetectedCode}
+              className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-3 px-6 rounded border-none cursor-pointer transition-colors"
+            >
+              Buscar
             </button>
           )}
         </div>
@@ -142,7 +151,7 @@ const BarcodeScanner = ({ onCodeDetected, onError, code, setCode }) => {
 
       <div
         ref={scannerRef}
-        className="w-full h-24 border-2 border-dashed border-gray-300 rounded-lg relative overflow-hidden bg-black"
+        className="w-full h-48 border-2 border-dashed border-gray-300 rounded-lg relative overflow-hidden bg-black"
       />
     </div>
   );
