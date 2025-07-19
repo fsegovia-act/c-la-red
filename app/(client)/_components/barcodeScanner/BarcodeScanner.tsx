@@ -1,7 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import Quagga from "quagga";
 
-const BarcodeScanner = ({ onCodeDetected, onError, code, setCode }) => {
+const BarcodeScanner = ({
+  onCodeDetected,
+  onError,
+  code,
+  setCode,
+  fnCallback,
+}) => {
   const scannerRef = useRef(null);
   const [isScanning, setIsScanning] = useState(false);
 
@@ -93,7 +99,9 @@ const BarcodeScanner = ({ onCodeDetected, onError, code, setCode }) => {
   useEffect(() => {
     return () => {
       if (isScanning) {
+        setIsScanning(false);
         Quagga.stop();
+        Quagga.offDetected(handleDetected);
       }
     };
   }, [isScanning]);
@@ -118,14 +126,14 @@ const BarcodeScanner = ({ onCodeDetected, onError, code, setCode }) => {
               onClick={startScanner}
               className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-3 px-6 rounded border-none cursor-pointer transition-colors mr-2"
             >
-              Iniciar
+              Start
             </button>
           ) : (
             <button
               onClick={stopScanner}
               className="bg-red-500 hover:bg-red-600 text-white font-semibold py-3 px-6 rounded border-none cursor-pointer transition-colors mr-2"
             >
-              Detener
+              Stop
             </button>
           )}
 
@@ -134,16 +142,16 @@ const BarcodeScanner = ({ onCodeDetected, onError, code, setCode }) => {
               onClick={clearDetectedCode}
               className="bg-gray-500 hover:bg-gray-600 text-white font-semibold py-3 px-6 rounded border-none cursor-pointer transition-colors mr-2"
             >
-              Limpiar
+              Clear
             </button>
           )}
 
           {code && (
             <button
-              onClick={clearDetectedCode}
+              onClick={fnCallback}
               className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-3 px-6 rounded border-none cursor-pointer transition-colors"
             >
-              Buscar
+              Search
             </button>
           )}
         </div>
