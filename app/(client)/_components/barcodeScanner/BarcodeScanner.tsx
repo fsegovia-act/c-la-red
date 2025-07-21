@@ -1,6 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import Quagga from "quagga";
 
+declare global {
+  interface Window {
+    webkitAudioContext?: typeof AudioContext;
+  }
+}
+
 const BarcodeScanner = ({
   onCodeDetected,
   onError,
@@ -73,6 +79,32 @@ const BarcodeScanner = ({
     }
   };
 
+  const playBeepSound = () => {
+    try {
+      const audioContext = new (window.AudioContext ||
+        window.webkitAudioContext!)();
+      const oscillator = audioContext.createOscillator();
+      const gainNode = audioContext.createGain();
+
+      oscillator.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+
+      oscillator.frequency.value = 800;
+      oscillator.type = "sine";
+
+      gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(
+        0.01,
+        audioContext.currentTime + 0.2
+      );
+
+      oscillator.start(audioContext.currentTime);
+      oscillator.stop(audioContext.currentTime + 0.2);
+    } catch (error) {
+      console.log("The sound could not be played:", error);
+    }
+  };
+
   const handleDetected = (result) => {
     const detectedCode = result.codeResult.code;
     const format = result.codeResult.format;
@@ -84,6 +116,7 @@ const BarcodeScanner = ({
 
     if (detectedCode && detectedCode.length >= 6 && quality < 0.15) {
       if (detectedCode !== code) {
+        playBeepSound();
         onCodeDetected &&
           onCodeDetected({
             code: detectedCode,
