@@ -1,6 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import Quagga from "quagga";
 
+declare global {
+  interface Window {
+    webkitAudioContext?: typeof AudioContext;
+  }
+}
+
 const BarcodeScanner = ({
   onCodeDetected,
   onError,
@@ -73,6 +79,32 @@ const BarcodeScanner = ({
     }
   };
 
+  const playBeepSound = () => {
+    try {
+      const audioContext = new (window.AudioContext ||
+        window.webkitAudioContext!)();
+      const oscillator = audioContext.createOscillator();
+      const gainNode = audioContext.createGain();
+
+      oscillator.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+
+      oscillator.frequency.value = 800;
+      oscillator.type = "sine";
+
+      gainNode.gain.setValueAtTime(0.8, audioContext.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(
+        0.01,
+        audioContext.currentTime + 0.2
+      );
+
+      oscillator.start(audioContext.currentTime);
+      oscillator.stop(audioContext.currentTime + 0.2);
+    } catch (error) {
+      console.log("The sound could not be played:", error);
+    }
+  };
+
   const handleDetected = (result) => {
     const detectedCode = result.codeResult.code;
     const format = result.codeResult.format;
@@ -106,56 +138,25 @@ const BarcodeScanner = ({
     };
   }, [isScanning]);
 
+  useEffect(() => {
+    if (code && code.length >= 6) {
+      playBeepSound();
+      stopScanner();
+      fnCallback();
+    }
+  }, [code, fnCallback]);
+
+  useEffect(() => {
+    if (scannerRef.current) {
+      startScanner();
+    }
+  }, []);
+
   return (
     <div className="max-w-3xl mx-auto p-4">
       <h2 className="text-xl font-semibold mb-4">
-        Escáner de Códigos de Barras
+        {code ? `Código: ${code}` : "Escaneando..."}
       </h2>
-
-      <div className="bg-sky-50 border border-sky-500 rounded-lg p-4 mb-4">
-        <div className="bg-sky-500 text-white p-2 my-1 rounded font-mono text-lg">
-          Code: {code}
-        </div>
-        <div className="bg-sky-500 text-white p-2 my-1 rounded font-mono text-lg">
-          {isScanning ? "Escaneando..." : "Escáner Detenido"}
-        </div>
-
-        <div className="my-4 text-left">
-          {!isScanning ? (
-            <button
-              onClick={startScanner}
-              className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-3 px-6 rounded border-none cursor-pointer transition-colors mr-2"
-            >
-              Start
-            </button>
-          ) : (
-            <button
-              onClick={stopScanner}
-              className="bg-red-500 hover:bg-red-600 text-white font-semibold py-3 px-6 rounded border-none cursor-pointer transition-colors mr-2"
-            >
-              Stop
-            </button>
-          )}
-
-          {code && (
-            <button
-              onClick={clearDetectedCode}
-              className="bg-gray-500 hover:bg-gray-600 text-white font-semibold py-3 px-6 rounded border-none cursor-pointer transition-colors mr-2"
-            >
-              Clear
-            </button>
-          )}
-
-          {code && (
-            <button
-              onClick={fnCallback}
-              className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-3 px-6 rounded border-none cursor-pointer transition-colors"
-            >
-              Search
-            </button>
-          )}
-        </div>
-      </div>
 
       <div
         ref={scannerRef}
