@@ -53,7 +53,7 @@ const Search = ({
           placeholder="Buscar..."
           className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-blue-500"
         />
-        <button
+        <div
           onClick={switchBarcodeScanner}
           className="absolute right-10 top-2 text-gray-500 rounded-[50%] bg-blue-100 p-1 opacity-100 hover:cursor-pointer hover:bg-blue-200 transition-colors"
         >
@@ -67,13 +67,13 @@ const Search = ({
             <rect x="18" y="2" width="1" height="12" />
             <rect x="20" y="2" width="2" height="12" />
           </svg>
-        </button>
-        <button
+        </div>
+        <div
           onClick={onSearch}
-          className="absolute right-2 top-2 text-gray-500"
+          className="absolute right-2 top-2 text-gray-500 hover:cursor-pointer min-w-[24px]"
         >
           🔍
-        </button>
+        </div>
       </div>
     </div>
   );
